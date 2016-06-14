@@ -6,7 +6,6 @@ next_id = function ()
 		return id
 	end
 end
-next_id = next_id()
 function core.entity.add(entity)
 	entity.id = next_id()
 	entity.systems = {}

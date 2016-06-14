@@ -21,6 +21,7 @@ loading.phases = {
         -- require entity types
         require 'entities.agent'
         require 'entities.planet'
+        require 'entities.player'
 
         -- add entities
         entity = core.entity.add(get_new_planet(300,300,10))
@@ -32,6 +33,7 @@ loading.phases = {
 
         entity = core.entity.add(get_new_planet(600,300,20))
         entity.velocity.y = -50     
+        entity = core.entity.add(get_new_player(300,300,10))
 
 end,
 }
