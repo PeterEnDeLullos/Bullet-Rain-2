@@ -1,0 +1,5 @@
+1. Graphics loading
+2. Graphics displaying
+3. Polygon displaying system
+4. Collision
+5. Animation
