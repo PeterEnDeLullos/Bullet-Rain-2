@@ -8,12 +8,12 @@ function get_new_player(x,y)
 	player.position = {x=x,y=y}
 	player.speed = {speed=100}
 	player.basic_move = true
-	player.no_scroll = true
 	player.square = {width=10, height=10}
 	player.light = {type="source"}
-	
+	player.no_scroll = {multiplier = 1}
+	player.remain_within_camera = {xpad = 50, ypad = 50}
 	player.light_source = {red=255, green=127,  blue=63, range=500, glowStrength=0.3}
 	add_simple_image_component(player,"assets/demon_statue.png",100,100)
-	
+	 
 	return player
 end

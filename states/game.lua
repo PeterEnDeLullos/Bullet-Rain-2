@@ -15,9 +15,15 @@ function ctx:update(dt)
     end
 end
 function ctx:draw()
-    for k,v in core.system.orderedPairs(game.system_categories.draw) do
+    love.graphics.push()
+  love.graphics.translate(-game.systems.scroll.x, -game.systems.scroll.y)
+ 
+      for k,v in core.system.orderedPairs(game.system_categories.draw) do
         v.draw()
     end
+    love.graphics.pop()
+
+
 end
 
 function ctx:leave()

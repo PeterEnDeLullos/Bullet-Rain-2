@@ -6,6 +6,7 @@ next_id = function ()
 		return id
 	end
 end
+next_id = next_id()
 function core.entity.add(entity)
 	entity.id = next_id()
 	entity.systems = {}
@@ -18,6 +19,7 @@ function core.entity.add(entity)
 	local  b = { __mode = "v" }
 	setmetatable(entity.systems, b) 
 	game.entities[entity.id] = entity
+	print(entity.name, entity.id)
 	return entity
 end
 function core.entity.remove(entity)
