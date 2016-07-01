@@ -5,6 +5,7 @@ loading.phases = {
     core.reset_game,
     function()
         
+        core.system.add( require 'systems.collision.hypercollision',  {"update"})
 
         -- add required systems
         core.system.add( require 'systems.basicphysics.velocity_from_acceleration', {"update"})
