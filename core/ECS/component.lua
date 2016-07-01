@@ -28,6 +28,7 @@ function core.component.add(entity,component_name,component)
 end
 
 function core.component.remove(entity, component_name)
+
 		for _,system in pairs(core.requirements_to_systems[component_name]) do
 			entity.systems[system.name] = nil
 			system.targets[entity.id] = nil

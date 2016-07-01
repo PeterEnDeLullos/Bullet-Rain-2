@@ -1,20 +1,30 @@
 local system = {}
 system.name = "image_loader"
-system.resources = {}
-system.load = function(dt)
-	local nothing = true
+system.update = function(dt)
+	local nothing = false
 	for k,v in pairs(system.targets) do
 		if nothing then
 			break
 		end
-		for kk,vv in pairs(v.images_needed) do
-			if not system.resources[vv]  then
-				system.resources[vv] = love.graphics.newImage( vv )
+		vv = v.images[v.images_unloaded[1]]
+		if vv then
+			if not game.resources[vv]  then
+				game.resources[vv] = {love.graphics.newImage( vv ), 1}
+				nothing = true	
+
+				v.images_unloaded[1] = { v.images_unloaded[1]  + 1 }
+				break
+			else
+				game.resources[vv][2] = game.resources[vv][2] + 1
+				v.images_unloaded[1] =  { v.images_unloaded[1]  + 1 }
 				break
 			end
+		else
+			core.component.remove(v,"images_unloaded")
+			core.component.add(v,"images_loaded",{true})
 		end
+
 	end
-	love.graphics.setColor( 255,255,255,255)
 end
-system.requirements = {images_needed=true}
+system.requirements = {images=true, images_unloaded = true}
 return system

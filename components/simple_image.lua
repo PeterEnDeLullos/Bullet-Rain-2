@@ -1,5 +1,6 @@
 function add_simple_image_component(entity,url,offX,offY)
-	core.component.add(entity,"image",{url = url, offX = offX, offY = offY})
-	core.component.add(entity,"image_not_yet_available", {})
-	core.component.add(entity,"render_still_image", {})
+	entity.images = {url}
+	entity.images_unloaded = {1}
+	entity.render_still_image = {ID = 1, offX = offX, offY =  offY}
+
 end
