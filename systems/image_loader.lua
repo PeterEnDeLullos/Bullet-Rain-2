@@ -9,7 +9,7 @@ system.update = function(dt)
 		vv = v.images[v.images_unloaded[1]]
 		if vv then
 			if not game.resources[vv]  then
-				game.resources[vv] = {love.graphics.newImage( vv ), 1}
+				game.resources[vv] = {love.graphics.newImage( "assets/Dropbox/bulletrain"..vv ), 1}
 				nothing = true	
 
 				v.images_unloaded[1] = { v.images_unloaded[1]  + 1 }

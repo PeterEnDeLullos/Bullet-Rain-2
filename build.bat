@@ -1,4 +1,4 @@
-SET game=ECS
+SET game=BulletRain
 dir
 rmdir build /s  /Q
 mkdir build

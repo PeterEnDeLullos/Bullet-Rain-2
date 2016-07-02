@@ -14,7 +14,7 @@ loading.phases = {
         core.system.add( require 'systems.basicphysics.draw_from_mass_and_position',  {"draw"})
         core.system.add( require 'systems.player_input.basic_move', {"update"})
         core.system.add( require 'systems.draw_functions.draw_square',  {"draw"})
-        --core.system.add( require 'systems.draw_functions.draw_image',  {"draw"})
+        core.system.add( require 'systems.draw_functions.draw_image',  {"draw"})
         core.system.add( require 'systems.draw_functions.draw_polygon',  {"draw"})
 
         core.system.add( require 'systems.light_system'(),  {"update","draw"})
@@ -33,10 +33,10 @@ loading.phases = {
     function()
         require 'components.simple_image'
         -- require entity types
-        require 'entities.agent'
-        require 'entities.planet'
+        
+        
         require 'entities.player'
-        require 'entities.aim_enemy'
+        
         require 'entities.zone'
 
         entity = core.entity.add(get_new_player(700,300))
@@ -48,7 +48,7 @@ end,
     function()
         if game.system_categories.load then
         for k,v in core.system.orderedPairs(game.system_categories.load) do
-            v.load(dt)
+            --v.load(dt)
         end
     end
 

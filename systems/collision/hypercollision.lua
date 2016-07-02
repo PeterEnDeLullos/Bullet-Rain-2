@@ -25,27 +25,54 @@ end
 local function get_xywh_by_polygon(polygon)
 	local minx,miny,maxx,maxy = polygon[1][1],polygon[1][2],polygon[1][1],polygon[1][2]
 	for k,v in ipairs(polygon) do
-		print(v[1],v[2])
 		minx = math.min(minx,v[1])
 		maxx = math.max(maxx,v[1])
 		miny = math.min(miny,v[2])
 		maxy = math.max(maxy,v[2])
 	end
-	print(minx,miny,maxx-minx,maxy-miny)
 	return minx,miny,maxx-minx, maxy - miny
+end
+function segmentIntersects(x1, y1, x2, y2, x3, y3, x4, y4)
+   d = (y4-y3)*(x2-x1)-(x4-x3)*(y2-y1)
+   Ua_n = ((x4-x3)*(y1-y3)-(y4-y3)*(x1-x3))
+   Ub_n = ((x2-x1)*(y1-y3)-(y2-y1)*(x1-x3))
+   if d == 0 then
+       --if Ua_n == 0 and Ua_n == Ub_n then
+       --    return true
+       --end
+       return false
+   end
+   Ua = Ua_n / d
+   Ub = Ub_n / d
+   if Ua >= 0 and Ua <= 1 and Ub >= 0 and Ub <= 1 then
+       return true
+   end
+   return false
+end
+local function line_in_polygon(polygon, start, finish, position, position2)
+	local old = polygon[#polygon]
+	for k,v in ipairs( polygon) do
+		if segmentIntersects(v[1]+position[1],v[2]+position[2],old[1]+position[1],old[2]+position[2],start[1]+position2[1],start[2]+position2[2],finish[1]+position2[1],finish[2]+position2[2]) then
+			return true
+		end
+	end
+	return false
 end
 local function polygon_in_polygon(polygon, polygon2,position,position2)
 	local hit = false
+	local old = polygon2[#polygon2]
 	for k,v in ipairs( polygon2) do
 
-		if point_in_polygon(polygon, v,position,position2) then
+		if line_in_polygon(polygon, old, v,position,position2) then
 			hit = true
 			break
 		end
+		old = v
 	end
 	if hit then
 		return true
 	end
+
 	return point_in_polygon(polygon2,polygon[1],position2,position)
 end
 
@@ -81,19 +108,19 @@ for k,v in pairs(system.targets) do
 				col = col.other
 				if v.col_polygon.is_point then
 					if not col.col_polygon.is_point then -- other is a polygon, I'm a poing
-						hit = point_in_polygon(col.col_polygon, {0,0}, col.position, v.position)
-
+						hit = point_in_polygon(col.col_polygon, {0,0}, {col.position.x,col.position.y}, {v.position.x, v.position.y})
+						print("HERE")
 					else
 						hit = false -- points never hit eachother
 					end
 				elseif col.col_polygon.is_point then -- Other is a point, I'm a polygon
-					hit = point_in_polygon(v.col_polygon, {0,0}, v.position, col.position)
+					hit = point_in_polygon(v.col_polygon, {0,0},  {v.position.x, v.position.y}, {col.position.x,col.position.y})
 				else -- polygon hits polygon
 
 					hit = polygon_in_polygon(v.col_polygon, col.col_polygon, {v.position.x, v.position.y}, {col.position.x,col.position.y})
 				end
 				if hit then
-					print("HIT")
+					print("HIT".. col.name)
 				end
 			end
 		else
@@ -108,14 +135,15 @@ end
 
 system.register = function (entity) 
 	local w,h,x,y = 0,0,entity.position.x,entity.position.y
-	if entity.is_point then
-		w = 4
-		h = 4
-		entity.col_polygon.offX = 2
-		entity.col_polygon.offY = 2
-		entity.col_polygon.x = x
-		entity.col_polygon.y = y
+	if entity.col_polygon.is_point then
+		w = 10
+		h = 10
+		entity.col_polygon.offX = 5
+		entity.col_polygon.offY = 5
+		entity.col_polygon.x = x-5
+		entity.col_polygon.y = y-5
 		x = x - w/2
+		print("fiets")
 		y = y - h/2
 	else
 		x,y,w,h = get_xywh_by_polygon(entity.col_polygon)
@@ -125,6 +153,8 @@ system.register = function (entity)
 		entity.col_polygon.y = entity.position.y
 		print("HOI")
 	end
+	w = math.max(w,1)
+	h = math.max(h,1)
 	system.world:add(entity, entity.position.x , entity.position.y,w,h)
 end
 system.unregister = function (entity)
