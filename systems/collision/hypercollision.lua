@@ -2,6 +2,7 @@
 local function get_cross(a,b)
 	return "cross"
 end
+local ln = 0
 local function point_in_polygon(polygon, point, position, position2)
   local odd = false
   local prev = #polygon
@@ -11,7 +12,7 @@ local function point_in_polygon(polygon, point, position, position2)
   for k,v in ipairs(polygon) do
   	w = polygon[prev]
   	if (v[2] < y and w[2] >= y) or (w[2] < y and v[2] >= y) then
-  		if v[1] + (y - v[2])/ (w[2]-w[1])*(v[2]-v[1]) < x then
+  		if (v[1] + (y - v[2]) / (w[2]-v[2])*(w[1]-v[1]) < x) then
   			odd = not odd
 
   		end
@@ -21,10 +22,33 @@ local function point_in_polygon(polygon, point, position, position2)
   return odd
 
 end
+local function  rotate_point(angle,p)
+	
+   local s = math.sin(angle)
+   local c = math.cos(angle)
 
-local function get_xywh_by_polygon(polygon)
-	local minx,miny,maxx,maxy = polygon[1][1],polygon[1][2],polygon[1][1],polygon[1][2]
+  
+  
+  -- rotate point
+  local xnew = p[1] * c - p[2] * s
+  local ynew = p[1] * s + p[2] * c
+
+  -- translate point back:
+  return {xnew, ynew}
+  
+end
+
+local function get_xywh_by_polygon(polygon, rotation)
+	if not rotation then
+		rotation = 90
+	end
+	polygon.rot = {}
+	polygon.rotation = rotation
 	for k,v in ipairs(polygon) do
+		polygon.rot[k] = rotate_point(rotation,v)
+	end
+	local minx,miny,maxx,maxy = polygon.rot[1][1],polygon.rot[1][2],polygon.rot[1][1],polygon.rot[1][2]
+	for k,v in ipairs(polygon.rot) do
 		minx = math.min(minx,v[1])
 		maxx = math.max(maxx,v[1])
 		miny = math.min(miny,v[2])
@@ -62,18 +86,23 @@ local function polygon_in_polygon(polygon, polygon2,position,position2)
 	local hit = false
 	local old = polygon2[#polygon2]
 	for k,v in ipairs( polygon2) do
-
+		if point_in_polygon(polygon,v,position, position2) then
+			hit = true
+			break
+		end
 		if line_in_polygon(polygon, old, v,position,position2) then
 			hit = true
 			break
 		end
 		old = v
 	end
-	if hit then
-		return true
-	end
+		if point_in_polygon(polygon2,polygon[1],position2, position) then
+			hit = true
+		end
+		
+	
+	return hit
 
-	return point_in_polygon(polygon2,polygon[1],position2,position)
 end
 
 local system = {}
@@ -82,19 +111,44 @@ system.name = "hypercollision"
 system.world = bump.newWorld()
 
 system.update = function(dt)
+				hitt=false
 
 for k,v in pairs(system.targets) do
+	local xx,yy = love.mouse.getPosition()
+	if point_in_polygon(v.col_polygon.rot,{xx,yy},{v.position.x, v.position.y}, {game.systems.scroll.x,game.systems.scroll.y})then
+		print(v.name) 
+	end
+
+
 	local x,y= v.col_polygon.x, v.col_polygon.y
-	
+	if v.rotation then
+		--v.rotation[1] = v.rotation[1] + dt
+	end
 	x = x - v.col_polygon.offX
 	y = y - v.col_polygon.offY
-		if v.col_polygon.updated then
-			local x,y,w,h = get_xywh_by_polygon(v.col_polygon)
-			v.col_polygon.offX = v.position.x
-			v.col_polygon.offY = v.position.y
-			x = x + v.position.x
-			y = y + v.position.y	
-			world:update(v, x,y,w,h)
+		if v.col_polygon.updated or (v.rotation and v.rotation[1] ~= v.col_polygon.rotation) then
+			v.col_polygon.updated = nil
+			
+			local x,y,w,h = 0,0,0,0
+			if v.rotation then
+				x,y,w,h = get_xywh_by_polygon(v.col_polygon, v.rotation[1]) -- also refreshes rotated polygon
+
+				v.rotation[1] = v.rotation[1]  + 0.1*dt
+			else
+				x,y,w,h = get_xywh_by_polygon(v.col_polygon, 0)
+			end
+			v.col_polygon.offX = x
+			v.col_polygon.offY = y
+			v.col_polygon.x = v.position.x
+			v.col_polygon.y = v.position.y
+			
+		
+			w = math.max(w,1)
+			h = math.max(h,1)
+			
+			
+			
+			system.world:update(v, x,y,w,h)
 
 
 		end
@@ -108,19 +162,20 @@ for k,v in pairs(system.targets) do
 				col = col.other
 				if v.col_polygon.is_point then
 					if not col.col_polygon.is_point then -- other is a polygon, I'm a poing
-						hit = point_in_polygon(col.col_polygon, {0,0}, {col.position.x,col.position.y}, {v.position.x, v.position.y})
+						hit = point_in_polygon(col.col_polygon.rot, {0,0}, {col.position.x,col.position.y}, {v.position.x, v.position.y})
 						print("HERE")
 					else
 						hit = false -- points never hit eachother
 					end
 				elseif col.col_polygon.is_point then -- Other is a point, I'm a polygon
-					hit = point_in_polygon(v.col_polygon, {0,0},  {v.position.x, v.position.y}, {col.position.x,col.position.y})
+					hit = point_in_polygon(v.col_polygon.rot, {0,0},  {v.position.x, v.position.y}, {col.position.x,col.position.y})
 				else -- polygon hits polygon
 
-					hit = polygon_in_polygon(v.col_polygon, col.col_polygon, {v.position.x, v.position.y}, {col.position.x,col.position.y})
+					hit = polygon_in_polygon(v.col_polygon.rot, col.col_polygon.rot, {v.position.x, v.position.y}, {col.position.x,col.position.y})
 				end
 				if hit then
-					print("HIT".. col.name)
+					ln = ln  + 1
+					hitt="HIT".. col.name.. ln .. " geraakt door "..v.name
 				end
 			end
 		else
@@ -146,7 +201,11 @@ system.register = function (entity)
 		print("fiets")
 		y = y - h/2
 	else
-		x,y,w,h = get_xywh_by_polygon(entity.col_polygon)
+		if entity.rotation then
+			x,y,w,h = get_xywh_by_polygon(entity.col_polygon, entity.rotation[1])
+		else
+			x,y,w,h = get_xywh_by_polygon(entity.col_polygon, 0)
+		end
 		entity.col_polygon.offX = x
 		entity.col_polygon.offY = y
 		entity.col_polygon.x = entity.position.x
@@ -155,6 +214,8 @@ system.register = function (entity)
 	end
 	w = math.max(w,1)
 	h = math.max(h,1)
+	entity.col_polygon.rot[1][1] = -100
+	entity.col_polygon.updated = true
 	system.world:add(entity, entity.position.x , entity.position.y,w,h)
 end
 system.unregister = function (entity)

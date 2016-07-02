@@ -32,6 +32,9 @@ function ctx:draw()
     end
     minfps = math.min(minfps, fps)
     love.graphics.print("Current FPS: "..tostring(fps).. "MIN".. minfps, 10, 10)
+    if hitt then
+        love.graphics.print(hitt,20,20)
+    end
 
 end
 

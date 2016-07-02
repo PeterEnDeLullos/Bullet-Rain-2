@@ -12,7 +12,7 @@ function get_empty_bullet(_, x,y,w)
 	entity.aims_for_entity = {entity = 1}
 	entity.color = {red=0,green=255,blue=0}
 	entity.no_scroll = {multiplier = 1}
-
+	entity.rotation = {3}
  	add_simple_image_component(entity,"/assets_old/animation/explosion_small_001.png",0,0)
  	entity.col_polygon = {{-4,0},{0,4},{4,0},{0,-4}, offX=0,offY=0}
  	entity.collision={}

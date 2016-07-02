@@ -8,18 +8,18 @@ test_system.draw = function()
 
 		if not v.col_polygon.is_point then
 			local line = {}
-			for _,w in ipairs(v.col_polygon) do
+			for _,w in ipairs(v.col_polygon.rot) do
 				line[#line+1] = w[1]+v.position.x
 				line[#line+1] = w[2]+v.position.y
 			end
 			if #line ~= 4 then
-				line[#line+1] = v.col_polygon[1][1]+v.position.x
-				line[#line+1] = v.col_polygon[1][2]+v.position.y
+				line[#line+1] = v.col_polygon.rot[1][1]+v.position.x
+				line[#line+1] = v.col_polygon.rot[1][2]+v.position.y
 			end
 
 			love.graphics.line(unpack(line))
-			--local x,y,w,h = game.systems.hypercollision.world:getRect(v)
-  			--love.graphics.rectangle('line', x,y,w,h)	
+			local x,y,w,h = game.systems.hypercollision.world:getRect(v)
+  			love.graphics.rectangle('line', x,y,w,h)	
 
 			end
 
