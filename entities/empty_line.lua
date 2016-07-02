@@ -12,7 +12,7 @@ function get_empty_line(_, x,y,dx,dy)
 	entity.rotation={0}
  	add_simple_image_component(entity,"/assets_old/animation/explosion_small_001.png",0,0)
 	entity.col_polygon = {{-dx/2,dy/2},{dx/2,dy/2}, offX=0,offY=0}
- 	entity.collision={}
+ 	entity.collision={type="enemy_beam"}
 	return entity
 
 end

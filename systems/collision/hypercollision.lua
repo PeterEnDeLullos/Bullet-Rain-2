@@ -3,6 +3,46 @@ local function get_cross(a,b)
 	return "cross"
 end
 local ln = 0
+local function handle_hit(a, b)
+	if a.collision.type == "player" then
+		if b.collision.type == "beam" then
+			if not a.damaged then
+				print("Beam hit player")
+				core.component.add(a,"damaged",{type="beam"})
+			end
+		end
+		if b.collision.type == "enemy_bullet" then
+			core.entity.remove(b)
+			if not a.damaged then
+				print("Bullet hit player")
+				core.component.add(a,"damaged",{type="bullet"})
+			end
+		end
+		if b.collision.type == "enemy" then
+			
+			if not a.damaged then
+				print("enemy hit player")
+				core.component.add(a,"damaged",{type="enemy"})
+			end
+		end
+	end
+	if a.collision.type == "enemy" then
+		if b.collision.type == "player_beam" then
+			if not a.damaged then
+				print("Beam hit enemy")
+				core.component.add(a,"damaged",{type="beam"})
+			end
+		end
+		if b.collision.type == "player_bullet" then
+			core.entity.remove(b)
+			if not a.damaged then
+				print("Bullet hit enemy")
+				core.component.add(a,"damaged",{type="bullet"})
+			end
+		end
+
+	end
+end
 local function point_in_polygon(polygon, point, position, position2)
   local odd = false
   local prev = #polygon
@@ -114,10 +154,7 @@ system.update = function(dt)
 				hitt=false
 
 for k,v in pairs(system.targets) do
-	local xx,yy = love.mouse.getPosition()
-	if point_in_polygon(v.col_polygon.rot,{xx,yy},{v.position.x, v.position.y}, {game.systems.scroll.x,game.systems.scroll.y})then
-		print(v.name) 
-	end
+
 
 
 	local x,y= v.col_polygon.x, v.col_polygon.y
@@ -175,7 +212,8 @@ for k,v in pairs(system.targets) do
 				end
 				if hit then
 					ln = ln  + 1
-					hitt="HIT".. col.name.. ln .. " geraakt door "..v.name
+					handle_hit(v,col)
+					handle_hit(col,v)
 				end
 			end
 		else

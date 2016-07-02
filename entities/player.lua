@@ -15,6 +15,6 @@ function get_new_player(x,y)
 	player.light_source = {red=255, green=127,  blue=63, range=500, glowStrength=0.3}
 	add_simple_image_component(player,"/assets_old/entity/ships/ship_003_idle.png",-21,-16)
   	player.col_polygon = {{0,-20},{10,30},{-10,30}, offX=0,offY=0}
-  	player.collision = {moves=true}
+  	player.collision = {moves=true, type="player"}
 	return player
 end
