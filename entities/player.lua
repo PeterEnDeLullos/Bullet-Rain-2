@@ -14,7 +14,7 @@ function get_new_player(x,y)
 	player.remain_within_camera = {xpad = 50, ypad = 50}
 	player.light_source = {red=255, green=127,  blue=63, range=500, glowStrength=0.3}
 	add_simple_image_component(player,"assets/demon_statue.png",100,100)
-  	player.col_polygon = {{0,0},{10,-20},{10,-20},{-1,0}}
+  	player.col_polygon = {{0,-20},{10,20},{-10,20}, offX=0,offY=0}
   	player.collision = {moves=true}
 	return player
 end

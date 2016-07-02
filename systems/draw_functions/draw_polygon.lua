@@ -7,26 +7,23 @@ test_system.draw = function()
 		if not v.col_polygon.is_point then
 			local line = {}
 			for _,w in ipairs(v.col_polygon) do
-				line[#line+1] = w[1]+v.position.x+v.col_polygon.offX
-				line[#line+1] = w[2]+v.position.y+v.col_polygon.offY
+				line[#line+1] = w[1]+v.position.x
+				line[#line+1] = w[2]+v.position.y
 			end
-			line[#line+1] = v.col_polygon[1][1]+v.position.x+v.col_polygon.offX
-			line[#line+1] = v.col_polygon[1][2]+v.position.y+v.col_polygon.offY
-			print( unpack(line))
-			print(game.systems.scroll.y)
+			line[#line+1] = v.col_polygon[1][1]+v.position.x
+			line[#line+1] = v.col_polygon[1][2]+v.position.y
+
 			love.graphics.line(unpack(line))
-		
-			
-		end
+			local x,y,w,h = game.systems.hypercollision.world:getRect(v)
+  			love.graphics.rectangle('line', x,y,w,h)	
 
+			end
+
+			love.graphics.circle("fill",v.position.x-1, v.position.y-1,2)
 
 	end
-	local items, len = game.systems.hypercollision.world:queryRect(-1000000, 500000, 640000, 480000)
 
-	for i=1, len do
-  		local x,y,w,h = world:getRect(items[i])
-  		love.graphics.rectangle('line', x,y,w,h)
-	end
+
 end
 test_system.requirements = {position=true,col_polygon=true}
 

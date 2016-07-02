@@ -1,4 +1,7 @@
 -- The basic idea is: first use an efficient way to do collisions (bump.lua). If that shows collisions, check naively (polygon intersection)
+local function get_cross(a,b)
+	return "cross"
+end
 local function point_in_polygon(polygon, point, position, position2)
   local odd = false
   local prev = #polygon
@@ -22,11 +25,13 @@ end
 local function get_xywh_by_polygon(polygon)
 	local minx,miny,maxx,maxy = polygon[1][1],polygon[1][2],polygon[1][1],polygon[1][2]
 	for k,v in ipairs(polygon) do
+		print(v[1],v[2])
 		minx = math.min(minx,v[1])
 		maxx = math.max(maxx,v[1])
 		miny = math.min(miny,v[2])
-		maxy = math.max(maxx,v[2])
+		maxy = math.max(maxy,v[2])
 	end
+	print(minx,miny,maxx-minx,maxy-miny)
 	return minx,miny,maxx-minx, maxy - miny
 end
 local function polygon_in_polygon(polygon, polygon2,position,position2)
@@ -52,8 +57,8 @@ system.world = bump.newWorld()
 system.update = function(dt)
 
 for k,v in pairs(system.targets) do
-	local x,y,_, _ = system.world:getRect(v)
-
+	local x,y= v.col_polygon.x, v.col_polygon.y
+	
 	x = x - v.col_polygon.offX
 	y = y - v.col_polygon.offY
 		if v.col_polygon.updated then
@@ -66,12 +71,12 @@ for k,v in pairs(system.targets) do
 
 
 		end
+
 		if v.collision.moves then
-			v.position.x, v.position.y, cols, len = system.world:move(v, v.position.x, v.position.y)
-			v.position.x, v.position.y = v.position.x, v.position.y 
+			v.position.x, v.position.y, cols, len = system.world:move(v, v.position.x + v.col_polygon.offX, v.position.y + v.col_polygon.offY,get_cross)
+			v.position.x, v.position.y = v.position.x - v.col_polygon.offX, v.position.y - v.col_polygon.offY
 			for _, col in pairs(cols) do
 				-- TODO: fancy check
-				print("COL")
 				local hit = false
 				col = col.other
 				if v.col_polygon.is_point then
@@ -87,10 +92,13 @@ for k,v in pairs(system.targets) do
 
 					hit = polygon_in_polygon(v.col_polygon, col.col_polygon, {v.position.x, v.position.y}, {col.position.x,col.position.y})
 				end
+				if hit then
+					print("HIT")
+				end
 			end
 		else
 			-- Bullets
-			system.world:update(v, v.position.x-x, v.position.y - y)
+			system.world:update(v, v.position.x + v.col_polygon.offX, v.position.y + v.col_polygon.offY)
 
 		end
 		
@@ -105,16 +113,19 @@ system.register = function (entity)
 		h = 4
 		entity.col_polygon.offX = 2
 		entity.col_polygon.offY = 2
+		entity.col_polygon.x = x
+		entity.col_polygon.y = y
 		x = x - w/2
 		y = y - h/2
 	else
 		x,y,w,h = get_xywh_by_polygon(entity.col_polygon)
 		entity.col_polygon.offX = x
 		entity.col_polygon.offY = y
-
+		entity.col_polygon.x = entity.position.x
+		entity.col_polygon.y = entity.position.y
+		print("HOI")
 	end
-		print( x + entity.position.x )
-	system.world:add(entity, x + entity.position.x ,y + entity.position.y,w,h)
+	system.world:add(entity, entity.position.x , entity.position.y,w,h)
 end
 system.unregister = function (entity)
 	system.world:remove(entity)

@@ -39,7 +39,7 @@ loading.phases = {
         require 'entities.aim_enemy'
         require 'entities.zone'
 
-        entity = core.entity.add(get_new_player(300,300))
+        entity = core.entity.add(get_new_player(700,300))
         
 
         require 'levels.level1'
