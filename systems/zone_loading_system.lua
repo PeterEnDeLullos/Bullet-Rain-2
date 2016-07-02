@@ -6,7 +6,9 @@ system.y = 0
 system.zone = 1
 system.scroll = 0
 system.update = function(dt)
-	
+		if not game.systems.scroll then
+			return
+		end
 		
 for k,v in pairs(system.targets) do
 	

@@ -17,7 +17,10 @@ end
 function ctx:draw()
 
     love.graphics.push()
-    love.graphics.translate(-game.systems.scroll.x, -game.systems.scroll.y)
+    if game.systems.scroll then
+            love.graphics.translate(-game.systems.scroll.x, -game.systems.scroll.y)
+        end
+    
  
       for k,v in core.system.orderedPairs(game.system_categories.draw) do
         v.draw()

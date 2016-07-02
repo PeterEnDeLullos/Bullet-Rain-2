@@ -1,9 +1,10 @@
 -- The basic idea is: first use an efficient way to do collisions (bump.lua). If that shows collisions, check naively (polygon intersection)
-local function point_in_polygon(polygon, point, position)
+local function point_in_polygon(polygon, point, position, position2)
   local odd = false
   local prev = #polygon
-  local y = point[2]
-  local x = point[1]
+
+  local y = point[2]+position2[2]-position[2]
+  local x = point[1]+position2[1]-position[1]
   for k,v in ipairs(polygon) do
   	w = polygon[prev]
   	if (v[2] < y and w[2] >= y) or (w[2] < y and v[2] >= y) then
@@ -31,8 +32,8 @@ end
 local function polygon_in_polygon(polygon, polygon2,position,position2)
 	local hit = false
 	for k,v in ipairs( polygon2) do
-		print(v[1])
-		if point_in_polygon(polygon, v) then
+
+		if point_in_polygon(polygon, v,position,position2) then
 			hit = true
 			break
 		end
@@ -40,7 +41,7 @@ local function polygon_in_polygon(polygon, polygon2,position,position2)
 	if hit then
 		return true
 	end
-	return point_in_polygon(polygon2,polygon[1])
+	return point_in_polygon(polygon2,polygon[1],position2,position)
 end
 
 local system = {}
@@ -52,7 +53,10 @@ system.update = function(dt)
 
 for k,v in pairs(system.targets) do
 	local x,y,_, _ = system.world:getRect(v)
-		if v.coL_polygon.updated then
+
+	x = x - v.col_polygon.offX
+	y = y - v.col_polygon.offY
+		if v.col_polygon.updated then
 			local x,y,w,h = get_xywh_by_polygon(v.col_polygon)
 			v.col_polygon.offX = v.position.x
 			v.col_polygon.offY = v.position.y
@@ -60,29 +64,33 @@ for k,v in pairs(system.targets) do
 			y = y + v.position.y	
 			world:update(v, x,y,w,h)
 
+
 		end
 		if v.collision.moves then
-			v.position.x, v.position.y, cols, len = world:move(v, v.position.x-x, v.position.y - y)
+			v.position.x, v.position.y, cols, len = system.world:move(v, v.position.x, v.position.y)
+			v.position.x, v.position.y = v.position.x, v.position.y 
 			for _, col in pairs(cols) do
-				print("Collision")
 				-- TODO: fancy check
+				print("COL")
 				local hit = false
+				col = col.other
 				if v.col_polygon.is_point then
 					if not col.col_polygon.is_point then -- other is a polygon, I'm a poing
-						hit = point_in_polygon(col.col_polygon, v.position)
+						hit = point_in_polygon(col.col_polygon, {0,0}, col.position, v.position)
 
 					else
 						hit = false -- points never hit eachother
 					end
 				elseif col.col_polygon.is_point then -- Other is a point, I'm a polygon
-					hit = point_in_polygon(v.col_polygon, col.position)
+					hit = point_in_polygon(v.col_polygon, {0,0}, v.position, col.position)
 				else -- polygon hits polygon
-					hit = polygon_in_polygon(v.col_polygon, col.coL_polygon)
+
+					hit = polygon_in_polygon(v.col_polygon, col.col_polygon, {v.position.x, v.position.y}, {col.position.x,col.position.y})
 				end
 			end
 		else
 			-- Bullets
-			v.position.x, v.position.y = world:update(v, v.position.x-x, v.position.y - y)
+			system.world:update(v, v.position.x-x, v.position.y - y)
 
 		end
 		
@@ -101,14 +109,15 @@ system.register = function (entity)
 		y = y - h/2
 	else
 		x,y,w,h = get_xywh_by_polygon(entity.col_polygon)
-		entity.col_polygon.offX = entity.position.x - x
-		entity.col_polygon.offY = entity.position.y - y		
+		entity.col_polygon.offX = x
+		entity.col_polygon.offY = y
+
 	end
-	
-	world:add(entity, x,y,w,h)
+		print( x + entity.position.x )
+	system.world:add(entity, x + entity.position.x ,y + entity.position.y,w,h)
 end
 system.unregister = function (entity)
-	world:remove(entity)
+	system.world:remove(entity)
 end
 system.requirements = {position=true, col_polygon = true, collision=true}
 
