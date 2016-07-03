@@ -17,7 +17,9 @@ function get_forward_gun(_, x,y,img,rot,rate,sub, side)
  	entity.col_polygon = {{0,-20},{-10,10},{10,10}, offX=0,offY=0}
  	entity.fire_forward = {x=0,y=-28,rate=rate,side=side}
  	entity.collision={type=side.."_gun"}
- 	
+ 	if not sub then
+ 		entity.aims_for_entity = {entity=1}
+ 	end
 	return entity
 
 end

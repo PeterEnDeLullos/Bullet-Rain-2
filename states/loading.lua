@@ -6,6 +6,7 @@ loading.phases = {
     function()
         
         core.system.add( require 'systems.collision.hypercollision',  {"update"})
+        core.system.add( require 'systems.basic_movement.rotate', {"update"})
 
         -- add required systems
         core.system.add( require 'systems.basicphysics.velocity_from_acceleration', {"update"})

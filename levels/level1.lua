@@ -10,3 +10,5 @@ core.entity.add(get_background_layer(nil, -500,-1000,"/assets/background/layer1.
 core.entity.add(get_background_layer(nil, -500,-1000,"/assets/background/layer23.png",0.3/2,-5))
 
 core.entity.add(get_forward_gun(nil, 100,100,nil,1,1,nil,"enemy"))
+core.entity.add(get_forward_gun(nil, -10,0,nil,0,1,game.entities[1],"player"))
+core.entity.add(get_forward_gun(nil, 10,0,nil,0,1,game.entities[1],"player"))

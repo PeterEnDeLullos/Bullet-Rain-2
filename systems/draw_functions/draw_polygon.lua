@@ -18,8 +18,8 @@ test_system.draw = function()
 			end
 
 			love.graphics.line(unpack(line))
-			local x,y,w,h = game.systems.hypercollision.world:getRect(v)
-  			love.graphics.rectangle('line', x,y,w,h)	
+			--local x,y,w,h = game.systems.hypercollision.world:getRect(v)
+  			--love.graphics.rectangle('line', x,y,w,h)	
 
 			end
 

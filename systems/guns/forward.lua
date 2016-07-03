@@ -5,7 +5,7 @@ system.name = "gun_forward"
 system.importance = 2
 system.update = function(dt)
 	for k,v in pairs(system.targets) do
-		if not v.subcomponent then
+		if true or not v.subcomponent then
 			
 			if v.fire_forward.to_fire then
 				v.fire_forward.to_fire = v.fire_forward.to_fire - dt
