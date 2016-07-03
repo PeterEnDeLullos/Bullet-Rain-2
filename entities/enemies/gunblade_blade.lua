@@ -2,7 +2,7 @@ local id = 0
 function get_gunblade_blade(_, x,y,rot,rate,sub, side)
  	local entity = {}
  	id =  id + 1
- 	entity.name="forward_gun".. id
+ 	entity.name="gunblade_blade".. id
 
 	entity.position = {x=x,y=y}
 	if(sub) then

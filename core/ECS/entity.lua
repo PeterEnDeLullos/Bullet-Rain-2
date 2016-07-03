@@ -19,11 +19,11 @@ function core.entity.add(entity)
 	local  b = { __mode = "v" }
 	setmetatable(entity.systems, b) 
 	game.entities[entity.id] = entity
-	print(entity.name, entity.id)
 	return entity
 end
 function core.entity.remove(entity)
 	game.entities[entity.id] = nil
+	print("remove", entity.name)
 	for k,v in pairs(entity.systems) do
 		v.targets[entity.id] = nil
 		if v.unregister then

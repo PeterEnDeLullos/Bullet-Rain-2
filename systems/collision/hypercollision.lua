@@ -8,21 +8,21 @@ local function handle_hit(a, b)
 		if b.collision.type == "beam" then
 			if not a.damaged then
 				print("Beam hit player")
-				core.component.add(a,"damaged",{type="beam"})
+				core.component.add(a,"damaged",{type="beam",amount = 1})
 			end
 		end
 		if b.collision.type == "enemy_bullet" then
 			core.entity.remove(b)
 			if not a.damaged then
 				print("Bullet hit player")
-				core.component.add(a,"damaged",{type="bullet"})
+				core.component.add(a,"damaged",{type="bullet",amount = 1})
 			end
 		end
 		if b.collision.type == "enemy" then
 			
 			if not a.damaged then
 				print("enemy hit player")
-				core.component.add(a,"damaged",{type="enemy"})
+				core.component.add(a,"damaged",{type="enemy",amount = 1})
 			end
 		end
 	end
@@ -30,14 +30,14 @@ local function handle_hit(a, b)
 		if b.collision.type == "player_beam" then
 			if not a.damaged then
 				print("Beam hit enemy")
-				core.component.add(a,"damaged",{type="beam"})
+				core.component.add(a,"damaged",{type="beam",amount = 1})
 			end
 		end
 		if b.collision.type == "player_bullet" then
 			core.entity.remove(b)
 			if not a.damaged then
 				print("Bullet hit enemy")
-				core.component.add(a,"damaged",{type="bullet"})
+				core.component.add(a,"damaged",{type="bullet",amount = 1})
 			end
 		end
 

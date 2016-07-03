@@ -9,7 +9,7 @@ function get_forward_bullet(_, x,y,rotation,side)
  	
  	entity.name="forward_".. entity.name
 	
-	add_straight_line_component(entity,80)
+	add_straight_line_component(entity,120)
 	return entity
 end
 print(get_empty_bullet)

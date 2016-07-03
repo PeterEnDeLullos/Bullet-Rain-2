@@ -27,10 +27,14 @@ loading.phases = {
         core.system.add( require 'systems.zone_loading_system',  {"update"})
         core.system.add( require 'systems.zone_unloading_system',  {"update"})
         core.system.add( require 'systems.image_loader',  {"update"})
+        core.system.add( require 'systems.damage.damage',  {"update"})
+        core.system.add( require 'systems.damage.player_damage',  {"update"})
+        core.system.add( require 'systems.damage.dummy',  {"update"})
 
         --core.system.add( require 'systems.entity_remain_within_camera',  {"update"})
         core.system.add( require 'systems.draw_direction_debug',  {"draw"})
         core.system.add( require 'systems.aim_class',  {"update"})
+        core.system.add( require 'systems.ship_components.shield', {"update"})
         core.system.add( require 'systems.bullet_movement.straight_line_bullet_bahavior', {"update"})
         game.resources = {}
         -- require component types
@@ -45,9 +49,9 @@ loading.phases = {
         require 'entities.zone'
 
         entity = core.entity.add(get_new_player(700,300))
-        
 
         require 'levels.level1'
+        core.entity.add(get_new_shield(_,entity,"player",1))
 
 end,
     function()

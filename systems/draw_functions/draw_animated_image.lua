@@ -3,6 +3,7 @@ local test_system = {}
 test_system.name = "draw_animation"
 test_system.animations = {}
 test_system.currents = {}
+local aa = 0
 local function importance_funcy(x1, x2)
 	
 	return x1.render.importance < x2.render.importance
@@ -17,6 +18,18 @@ test_system.draw = function()
 	table.sort(l_targets, importance_funcy)
 	for k,v in ipairs(l_targets) do
 		love.graphics.push()
+		if v.shielded and v.lives then
+			love.graphics.push()
+			love.graphics.setColor(0,0,255,255)
+			if love.timer.getFPS() > 0 then
+			aa=aa + 1/love.timer.getFPS()
+			end
+			local a,b,c,d = core.rotate_point(aa,{-40,0}), core.rotate_point(aa,{0,40}),core.rotate_point(aa,{40,0}), core.rotate_point(aa,{0,-40})
+
+			love.graphics.line(a[1]+v.position.x,a[2]+v.position.y,b[1]+v.position.x,b[2]+v.position.y,c[1]+v.position.x,c[2]+v.position.y,d[1]+v.position.x,d[2]+v.position.y,a[1]+v.position.x,a[2]+v.position.y)
+			love.graphics.setColor(255,255,255,255)
+			love.graphics.pop()
+		end
 		if v.render.zoom then
 			love.graphics.scale(v.render.zoom)
 		end
