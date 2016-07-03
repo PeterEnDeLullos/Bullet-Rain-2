@@ -6,7 +6,7 @@ function get_shield(_, sub, side)
 
 	entity.position = {x=0,0}
 	if not(sub) then
-		error "shields must have a subsystem"
+		error "shieldgens must have a subsystem"
 	end
 	entity.subcomponent={x=0,y=0,id=sub.id}
 	entity.no_scroll = {multiplier = 1}

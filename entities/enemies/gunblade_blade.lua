@@ -14,8 +14,10 @@ function get_gunblade_blade(_, x,y,rot,rate,sub, side)
  	add_simple_image_component(entity,"/assets/ships/enemy ships/gunblade/gunblade blade.png",-8,-64)
  	entity.render.importance = 6.9
  	entity.rotation = {rot}
- 	entity.col_polygon = {{-8,-16},{-8,-40},{8,-40}, {8,-16}, offX=0,offY=0}
- 	entity.fire_forward = {x=6,y=-44,rate=rate,side=side}
+ 	entity.col_polygon = {{-8,-18},{-8,-40},{8,-40}, {8,-18}, offX=0,offY=0}
+ 	entity.fire_forward = {x=6,y=-44,rate=rate*4,side=side,fire_name="gunblade_blade"}
+ 	
+
  	entity.collision={moves=true,type=side}
  	entity.simple_rotation={-1}
 	entity.health={6,to_sub=1, to_self=0}

@@ -113,6 +113,7 @@ end
 
 function core.system.remove(system)
 	-- remove system from possible results from requirement
+	
 	for k,v in pairs(system.requirements)  do
 		for l,w in pairs(core.requirements_to_systems[k]) do
 			if w == system then

@@ -6,7 +6,6 @@ function get_aim_enemy(_, x,y,w)
  	entity.name="aim_enemy".. id
 
 	entity.position = {x=x,y=y}
-	entity.direction = 0
 	entity.aims_for_entity = {entity = 1}
 	entity.color = {red=0,green=255,blue=0}
  	entity.rotation = {90}

@@ -38,6 +38,33 @@ local function handle_hit(a, b)
 
 	end
 end
+local function check_useful(a,b)
+		if a.collision.type == "player" then
+		if b.collision.type == "beam" then
+			return true
+		end
+		if b.collision.type == "enemy_bullet" then
+						return true
+
+		end
+		if b.collision.type == "enemy" then
+						return true
+
+		end
+	end
+	if a.collision.type == "enemy" then
+		if b.collision.type == "player_beam" then
+						return true
+
+		end
+		if b.collision.type == "player_bullet" then
+						return true
+
+		end
+
+	end
+	return false
+end
 local function point_in_polygon(polygon, point, position, position2)
   local odd = false
   local prev = #polygon
@@ -129,7 +156,7 @@ end
 local system = {}
 local bump = require 'lib.bump.bump'
 system.name = "hypercollision"
-system.world = bump.newWorld()
+system.world = bump.newWorld(32)
 
 system.update = function(dt)
 				hitt=false
@@ -146,10 +173,10 @@ for k,v in pairs(system.targets) do
 	y = y - v.col_polygon.offY
 		if v.col_polygon.updated or (v.rotation and v.rotation[1] ~= v.col_polygon.rotation) then
 			v.col_polygon.updated = nil
-			
 			local x,y,w,h = 0,0,0,0
 			if v.rotation then
 				x,y,w,h = get_xywh_by_polygon(v.col_polygon, v.rotation[1]) -- also refreshes rotated polygon
+				v.col_polygon.rotation = v.rotation[1]
 			else
 				x,y,w,h = get_xywh_by_polygon(v.col_polygon, 0)
 			end
@@ -157,23 +184,21 @@ for k,v in pairs(system.targets) do
 			v.col_polygon.offY = y
 			v.col_polygon.x = v.position.x
 			v.col_polygon.y = v.position.y
-			
-		
 			w = math.max(w,1)
-			h = math.max(h,1)
-			
-			
-			
+			h = math.max(h,1)			
 			system.world:update(v, x,y,w,h)
-
-
 		end
 
 		if v.collision.moves then
+
 			v.position.x, v.position.y, cols, len = system.world:move(v, v.position.x + v.col_polygon.offX, v.position.y + v.col_polygon.offY,get_cross)
 			v.position.x, v.position.y = v.position.x - v.col_polygon.offX, v.position.y - v.col_polygon.offY
 			for _, col in pairs(cols) do
 				-- TODO: fancy check
+
+				if  check_useful(col.other,col.item) or check_useful(col.item,col.other) then
+
+
 				local hit = false
 				col = col.other
 				if v.col_polygon.is_point then
@@ -189,13 +214,16 @@ for k,v in pairs(system.targets) do
 					hit = polygon_in_polygon(v.col_polygon.rot, col.col_polygon.rot, {v.position.x, v.position.y}, {col.position.x,col.position.y})
 				end
 				if hit then
+
 					ln = ln  + 1
 					handle_hit(v,col)
 					handle_hit(col,v)
 				end
 			end
+			end
 		else
 			-- Bullets
+
 			system.world:update(v, v.position.x + v.col_polygon.offX, v.position.y + v.col_polygon.offY)
 
 		end
@@ -233,7 +261,9 @@ system.register = function (entity)
 	system.world:add(entity, entity.position.x , entity.position.y,w,h)
 end
 system.unregister = function (entity)
+	if  system.world:hasItem(entity) then
 	system.world:remove(entity)
+end
 end
 system.requirements = {position=true, col_polygon = true, collision=true}
 

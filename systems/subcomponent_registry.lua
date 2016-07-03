@@ -12,7 +12,6 @@ system.register = function(v)
 			system.components[v.subcomponent.id]  = {}
 		end
 		system.components[v.subcomponent.id] [#system.components[v.subcomponent.id] +1]=v
-		print("REG")
 	
 end
 

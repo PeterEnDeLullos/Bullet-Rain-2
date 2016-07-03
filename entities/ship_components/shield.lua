@@ -16,9 +16,7 @@ function get_new_shield(_, sub, side,value)
  	entity.rotation = {0}
  	entity.simple_rotation={-1}
 
- 	entity.col_polygon = {{0,-40},{40,0},{0,40},{-40,0}, offX=0,offY=0}
  	entity.shield = {value}
- 	entity.collision={type=side.."_shield"}
 
 	return entity
 

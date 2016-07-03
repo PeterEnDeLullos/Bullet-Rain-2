@@ -19,14 +19,24 @@ system.update = function(dt)
 		if love.keyboard.isDown( "d") then
 			dx = 1
 		end
+		if love.keyboard.isDown("space") then
+			if not v.fire then
+				core.component.add(v,"fire",{left=true,right=true})
+			end
+		else
+			if v.fire then
+				core.component.remove(v,"fire")
+			end
+		end
+
 		hyp = math.sqrt(dx*dx+dy*dy)
 
 		if hyp > 0 then
 			dx = dx / hyp
 			dy = dy / hyp
 		end
-		v.position.x = v.position.x + dx*v.speed.speed*dt
-		v.position.y = v.position.y + dy*v.speed.speed*dt
+		v.velocity.x =  dx*v.speed.speed
+		v.velocity.y =  dy*v.speed.speed
 	end
 end
 

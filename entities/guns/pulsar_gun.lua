@@ -1,9 +1,6 @@
 
 local id = 0
-function get_forward_gun(_, x,y,img,rot,rate,sub, side, name)
-	if not name then
-		name="gun"
-	end
+function get_pulsar_gun(_, x,y,img,rot,rate,sub, side, name)
  	local entity = {}
  	id =  id + 1
  	entity.name="forward_gun".. id
@@ -17,13 +14,16 @@ function get_forward_gun(_, x,y,img,rot,rate,sub, side, name)
 	
  	--add_simple_image_component(entity,img,0,0)
  	--entity.render_still_image.importance = 7
- 	entity.rotation = {rot}
- 	entity.col_polygon = {{0,-20},{-10,10},{10,10}, offX=0,offY=0}
- 	entity.fire_forward = {x=0,y=-28,rate=rate,side=side,fire_name=name}
- 	entity.collision={type=side.."_gun"}
- 	if not sub then
+ 	entity.rotation = {0}
+ 	--entity.col_polygon = {{0,-20},{-10,10},{10,10}, offX=0,offY=0}
+ 	
+ 	entity.collision={type=side.."_enemy"}
+ 	
+ 	entity.fire_pulsar = {x=0,y=-28,rate=rate,side=side,fire_name=name}
+
+
  		entity.aims_for_entity = {entity=1}
- 	end
+ 	
 	return entity
 
 end

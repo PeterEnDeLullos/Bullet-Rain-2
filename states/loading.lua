@@ -20,7 +20,10 @@ loading.phases = {
 
         core.system.add( require 'systems.draw_functions.draw_polygon',  {"draw"})
         core.system.add( require 'systems.guns.forward',  {"update"})
+        core.system.add( require 'systems.guns.pulsar',  {"update"})
+
         core.system.add( require 'systems.destroy_after_timeout',  {"update"})
+        core.system.add( require 'systems.destroy_outside_screen',  {"update"})
 
         core.system.add( require 'systems.light_system'(),  {"update","draw"})
         core.system.add( require 'systems.scroll',  {"update"})
@@ -30,6 +33,8 @@ loading.phases = {
         core.system.add( require 'systems.zone_unloading_system',  {"update"})
         core.system.add( require 'systems.image_loader',  {"update"})
         core.system.add( require 'systems.damage.damage',  {"update"})
+        core.system.add( require 'systems.damage.on_death',  {"update"})
+
         core.system.add( require 'systems.damage.player_damage',  {"update"})
         core.system.add( require 'systems.damage.dummy',  {"update"})
         core.system.add( require 'systems.explosions.boem_on_death',  {"update"})

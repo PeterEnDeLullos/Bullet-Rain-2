@@ -27,9 +27,10 @@ test_system.draw = function()
 			local a,b,c,d = core.rotate_point(aa,{-40,0}), core.rotate_point(aa,{0,40}),core.rotate_point(aa,{40,0}), core.rotate_point(aa,{0,-40})
 
 			love.graphics.line(a[1]+v.position.x,a[2]+v.position.y,b[1]+v.position.x,b[2]+v.position.y,c[1]+v.position.x,c[2]+v.position.y,d[1]+v.position.x,d[2]+v.position.y,a[1]+v.position.x,a[2]+v.position.y)
-			love.graphics.setColor(255,255,255,255)
 			love.graphics.pop()
 		end
+		love.graphics.setColor(255,255,255,255)
+
 		if v.render.zoom then
 			love.graphics.scale(v.render.zoom)
 		end
