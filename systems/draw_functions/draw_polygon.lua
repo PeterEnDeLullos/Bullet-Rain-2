@@ -4,6 +4,9 @@ test_system.importance = -2
 
 test_system.draw = function()
 	for k,v in pairs(test_system.targets) do
+			if v.position.new then
+				v.position.new = false
+			else
 			love.graphics.setColor( 128,128,128,255)
 
 		if not v.col_polygon.is_point then
@@ -24,7 +27,7 @@ test_system.draw = function()
 			end
 
 			love.graphics.circle("fill",v.position.x-1, v.position.y-1,2)
-
+		end
 	end
 
 

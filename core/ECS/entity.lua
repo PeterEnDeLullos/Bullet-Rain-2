@@ -22,8 +22,13 @@ function core.entity.add(entity)
 	return entity
 end
 function core.entity.remove(entity)
+
+	if game.systems.subcomponent_reg.components[entity.id] ~= nil then
+		for k,v in pairs(game.systems.subcomponent_reg.components[entity.id] ) do
+			core.entity.remove(v)
+		end
+	end
 	game.entities[entity.id] = nil
-	print("remove", entity.name)
 	for k,v in pairs(entity.systems) do
 		v.targets[entity.id] = nil
 		if v.unregister then

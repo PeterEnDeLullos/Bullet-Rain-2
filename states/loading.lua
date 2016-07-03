@@ -20,16 +20,19 @@ loading.phases = {
 
         core.system.add( require 'systems.draw_functions.draw_polygon',  {"draw"})
         core.system.add( require 'systems.guns.forward',  {"update"})
+        core.system.add( require 'systems.destroy_after_timeout',  {"update"})
 
         core.system.add( require 'systems.light_system'(),  {"update","draw"})
         core.system.add( require 'systems.scroll',  {"update"})
-        
+                core.system.add( require 'systems.subcomponent_registry',{"update"})
+
         core.system.add( require 'systems.zone_loading_system',  {"update"})
         core.system.add( require 'systems.zone_unloading_system',  {"update"})
         core.system.add( require 'systems.image_loader',  {"update"})
         core.system.add( require 'systems.damage.damage',  {"update"})
         core.system.add( require 'systems.damage.player_damage',  {"update"})
         core.system.add( require 'systems.damage.dummy',  {"update"})
+        core.system.add( require 'systems.explosions.boem_on_death',  {"update"})
 
         --core.system.add( require 'systems.entity_remain_within_camera',  {"update"})
         core.system.add( require 'systems.draw_direction_debug',  {"draw"})
@@ -43,13 +46,13 @@ loading.phases = {
         require 'components.simple_image'
         -- require entity types
         
-        
+        require 'entities.effects.boem'
         require 'entities.player'
         
         require 'entities.zone'
 
         entity = core.entity.add(get_new_player(700,300))
-
+        core.entity.add(get_new_explosion(300,300,1))
         require 'levels.level1'
         core.entity.add(get_new_shield(_,entity,"player",1))
 
