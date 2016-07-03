@@ -3,7 +3,16 @@ local test_system = {}
 test_system.name = "draw_animation"
 test_system.animations = {}
 test_system.currents = {}
+local function importance_func(x1, x2)
+	if not x1.render_animation.importance then
+		return false
+	elseif not x2.render_animation.importance then
+		return x1.render_animation.importance >= 0
+	end
+	return x1.render_animation.importance > x2.render_animation.importance
+end
 test_system.draw = function()
+table.sort( test_system.targets, importance_func )
 	for k,v in pairs(test_system.targets) do
 		if test_system.currents[v.id] ~= v.render_animation.ID then
 			test_system.currents[v.id] = v.render_animation.ID

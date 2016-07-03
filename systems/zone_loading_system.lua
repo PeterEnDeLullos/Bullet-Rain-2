@@ -31,6 +31,11 @@ for k,v in pairs(system.targets) do
 						ent.position.y = ent.position.y + system.y
 						
 					end
+					if w.add then
+						for k,v in ipairs(w.add) do
+							ent[v[1]]=v[2]
+						end
+					end
 					core.entity.add(ent)
 
 	

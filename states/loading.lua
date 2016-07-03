@@ -11,6 +11,7 @@ loading.phases = {
         core.system.add( require 'systems.basicphysics.velocity_from_acceleration', {"update"})
         core.system.add( require 'systems.basicphysics.position_from_velocity',  {"update"})
         core.system.add( require 'systems.basicphysics.acceleration_from_mass',  {"update"})
+        core.system.add( require 'systems.basicphysics.subcomponent',  {"update"})
         core.system.add( require 'systems.basicphysics.draw_from_mass_and_position',  {"draw"})
         core.system.add( require 'systems.player_input.basic_move', {"update"})
         core.system.add( require 'systems.draw_functions.draw_square',  {"draw"})

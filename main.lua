@@ -12,7 +12,7 @@ require"lib.Tserial"
 
 
 function love.load()
-
+love.graphics.setDefaultFilter("nearest", "nearest", 1)
 
     GS.registerEvents()
 

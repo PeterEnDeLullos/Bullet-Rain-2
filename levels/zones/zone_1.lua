@@ -5,8 +5,10 @@ require 'entities.empty_line'
 local entities = {}
 --entities[1] = {get_aim_enemy, -20, 270}
 --entities[2] = {get_aim_enemy, 200, 100}
-entities[3] = {get_empty_bullet, 300, 300}
+entities[1] = {get_empty_bullet, 300, 300}
+entities[1].add={{"subcomponent",{x=40,y=40,id=1}}}
 
+print("A", entities[1].add[1][1])
 --entities[4] = {get_empty_line, 100, 300,400,0}
 
 return {entities = entities, zone_condition = {MOVEMENT, 0}, unloaded = true}
