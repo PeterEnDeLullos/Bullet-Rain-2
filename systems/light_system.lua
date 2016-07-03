@@ -4,7 +4,7 @@ return function()
 local light = {}
 
 light.name= "light"
-light.importance = -2
+light.importance = 2
 
 light.objects = {}
 
@@ -34,17 +34,25 @@ function light.update(dt)
 			if game.entities[k] == nil then
 					error("K"..k..tostring(light).." == nil")
 			end
-			v:setPosition(game.entities[k].position.x,game.entities[k].position.y)
+			v:setPosition(game.entities[k].position.x-game.systems.scroll.x,game.entities[k].position.y-game.systems.scroll.y)
 		end
 		if light.world then
 	    	light.world:update()	
 	    end
 end
 function light.draw()
-	if light.world then
+	love.graphics.push()
+    if game.systems.scroll then
+            love.graphics.translate(game.systems.scroll.x, game.systems.scroll.y)
+        end
+   	if light.world then
 	    light.world:drawShadow()
         light.world:drawShine()
     end
+    love.graphics.pop()
+
+
+    
 end
 
 

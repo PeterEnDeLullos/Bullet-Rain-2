@@ -1,0 +1,9 @@
+-4 tot -1 : Backgrounds
+0 : nothing yet
+1 : Pickups
+2 : Beams
+3 : Bullets
+4 : shields
+5 : Player
+6 : Enemies
+7 : Guns

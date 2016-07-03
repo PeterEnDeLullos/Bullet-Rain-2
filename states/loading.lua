@@ -15,10 +15,10 @@ loading.phases = {
         core.system.add( require 'systems.basicphysics.draw_from_mass_and_position',  {"draw"})
         core.system.add( require 'systems.player_input.basic_move', {"update"})
         core.system.add( require 'systems.draw_functions.draw_square',  {"draw"})
-        core.system.add( require 'systems.draw_functions.draw_image',  {"draw"})
-                core.system.add( require 'systems.draw_functions.draw_animated_image',  {"draw","update"})
+        core.system.add( require 'systems.draw_functions.draw_animated_image',  {"draw","update"})
 
         core.system.add( require 'systems.draw_functions.draw_polygon',  {"draw"})
+        core.system.add( require 'systems.guns.forward',  {"update"})
 
         core.system.add( require 'systems.light_system'(),  {"update","draw"})
         core.system.add( require 'systems.scroll',  {"update"})

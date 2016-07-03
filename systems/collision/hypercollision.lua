@@ -62,21 +62,7 @@ local function point_in_polygon(polygon, point, position, position2)
   return odd
 
 end
-local function  rotate_point(angle,p)
-	
-   local s = math.sin(angle)
-   local c = math.cos(angle)
 
-  
-  
-  -- rotate point
-  local xnew = p[1] * c - p[2] * s
-  local ynew = p[1] * s + p[2] * c
-
-  -- translate point back:
-  return {xnew, ynew}
-  
-end
 
 local function get_xywh_by_polygon(polygon, rotation)
 	if not rotation then
@@ -85,7 +71,7 @@ local function get_xywh_by_polygon(polygon, rotation)
 	polygon.rot = {}
 	polygon.rotation = rotation
 	for k,v in ipairs(polygon) do
-		polygon.rot[k] = rotate_point(rotation,v)
+		polygon.rot[k] = core.rotate_point(rotation,v)
 	end
 	local minx,miny,maxx,maxy = polygon.rot[1][1],polygon.rot[1][2],polygon.rot[1][1],polygon.rot[1][2]
 	for k,v in ipairs(polygon.rot) do
@@ -198,7 +184,6 @@ for k,v in pairs(system.targets) do
 				if v.col_polygon.is_point then
 					if not col.col_polygon.is_point then -- other is a polygon, I'm a poing
 						hit = point_in_polygon(col.col_polygon.rot, {0,0}, {col.position.x,col.position.y}, {v.position.x, v.position.y})
-						print("HERE")
 					else
 						hit = false -- points never hit eachother
 					end
@@ -234,7 +219,6 @@ system.register = function (entity)
 		entity.col_polygon.x = x-5
 		entity.col_polygon.y = y-5
 		x = x - w/2
-		print("fiets")
 		y = y - h/2
 	else
 		if entity.rotation then
@@ -246,7 +230,6 @@ system.register = function (entity)
 		entity.col_polygon.offY = y
 		entity.col_polygon.x = entity.position.x
 		entity.col_polygon.y = entity.position.y
-		print("HOI")
 	end
 	w = math.max(w,1)
 	h = math.max(h,1)

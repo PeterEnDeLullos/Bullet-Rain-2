@@ -4,6 +4,6 @@ function add_simple_animation_component(entity,urls,animations, offX, offY)
 
 	entity.animations = animations
 	entity.animations.start = 1
-	entity.render_animation = {ID = 1, offX = offX, offY =  offY}
+	entity.render = {ID = 1, offX = offX, offY =  offY}
 
 end

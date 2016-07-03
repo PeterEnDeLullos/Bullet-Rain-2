@@ -13,8 +13,8 @@ function get_background_layer(_, x,y,img,mult,lay,sub)
 	entity.no_scroll = {multiplier = mult}
 	
  	add_simple_image_component(entity,img,0,0)
- 	entity.render_still_image.importance = lay
-	entity.render_still_image.zoom = 2
+ 	entity.render.importance = lay
+	entity.render.zoom = 4
 
  	
 	return entity
