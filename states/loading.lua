@@ -30,6 +30,7 @@ loading.phases = {
         --core.system.add( require 'systems.entity_remain_within_camera',  {"update"})
         core.system.add( require 'systems.draw_direction_debug',  {"draw"})
         core.system.add( require 'systems.aim_class',  {"update"})
+        core.system.add( require 'systems.bullet_movement.straight_line_bullet_bahavior', {"update"})
         game.resources = {}
         -- require component types
     end, 

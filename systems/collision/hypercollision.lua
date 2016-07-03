@@ -169,8 +169,6 @@ for k,v in pairs(system.targets) do
 			local x,y,w,h = 0,0,0,0
 			if v.rotation then
 				x,y,w,h = get_xywh_by_polygon(v.col_polygon, v.rotation[1]) -- also refreshes rotated polygon
-
-				v.rotation[1] = v.rotation[1]  + 0.1*dt
 			else
 				x,y,w,h = get_xywh_by_polygon(v.col_polygon, 0)
 			end
