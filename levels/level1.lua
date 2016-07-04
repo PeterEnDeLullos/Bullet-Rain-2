@@ -1,6 +1,5 @@
 return function ()
 	require 'entities.background_layer'
-	require 'entities.guns.forward_gun'
 
 	core.entity.add(get_new_zone("levels.zones.zone_1"))
 	core.entity.add(get_new_zone("levels.zones.zone_2"))
@@ -11,6 +10,5 @@ return function ()
 	core.entity.add(get_background_layer(nil, -500,-1000,"/assets/background/layer23.png",0.3/2,-5))
 
 	--core.entity.add(get_forward_gun(nil, 100,100,nil,1,1,nil,"enemy"))
-	core.entity.add(get_forward_gun(nil, -10,0,nil,0,2,game.entities[1],"player","left"))
-	core.entity.add(get_forward_gun(nil, 10,0,nil,0,2,game.entities[1],"player","right"))
+
 end

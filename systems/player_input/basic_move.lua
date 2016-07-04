@@ -21,7 +21,7 @@ system.update = function(dt)
 		end
 		if love.keyboard.isDown("space") then
 			if not v.fire then
-				core.component.add(v,"fire",{left=true,right=true})
+				core.component.add(v,"fire",{left=true,right=true,center=true})
 			end
 		else
 			if v.fire then

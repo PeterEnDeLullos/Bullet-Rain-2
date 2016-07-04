@@ -24,6 +24,11 @@ for k,v in pairs(system.targets) do
 	end
 end
 end
+system.unregister = function(entity)
+	if game.systems.zone_loading then
+		game.systems.zone_loading.entities =game.systems.zone_loading.entities  -1
+	end
+end
 system.requirements = {remove_zone = true}
 
 return system

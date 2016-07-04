@@ -38,6 +38,8 @@ loading.phases = {
 
         core.system.add( my_require 'systems.draw_functions.draw_polygon',  {"draw"})
         core.system.add( my_require 'systems.guns.forward',  {"update"})
+        core.system.add( my_require 'systems.guns.split_forward',  {"update"})
+
         core.system.add( my_require 'systems.guns.pulsar',  {"update"})
 
         core.system.add( my_require 'systems.destroy_after_timeout',  {"update"})
@@ -84,7 +86,7 @@ next_id = next_id()
         my_require 'entities.zone'
 
         local entity = core.entity.add(get_new_player(700,300))
-
+        
         my_require ('levels.level1')()
         local a = get_new_shield(_,entity,"player",1)
         core.entity.add(a)
@@ -94,6 +96,12 @@ next_id = next_id()
          if entity.shielded[1] ~= 1 then
              error(entity.shielded[1])
         end
+        my_require 'entities.guns.forward_gun'
+        my_require 'entities.guns.split_forward_gun'
+
+        core.entity.add(get_forward_gun(nil, -10,0,nil,0,3,game.entities[1],"player","left"))
+        core.entity.add(get_forward_gun(nil, 10,0,nil,0,3,game.entities[1],"player","right"))
+        core.entity.add(get_split_forward_gun(nil, 0,0,nil,0,2,game.entities[1],"player","center"))
 
 end,
     function()

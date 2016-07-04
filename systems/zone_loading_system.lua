@@ -5,6 +5,7 @@ system.x = 0
 system.y = 0
 system.zone = 1
 system.scroll = 0
+system.entities = -1
 system.update = function(dt)
 		if not game.systems.scroll then
 			return
@@ -14,10 +15,18 @@ for k,v in pairs(system.targets) do
 	-- Loading
 	if v.zone_id == system.zone then
 		
-		if v.zone.zone_condition[1]==MOVEMENT then
+		local cond = false
+		if v.zone.zone_condition[1]==MOVEMENT  then
 			local dx, dy = system.x - game.systems.scroll.x, system.y - game.systems.scroll.y
 			if v.zone.zone_condition[2] < math.sqrt(dx*dx + dy * dy) then
-				
+				cond = true
+			end
+		end
+		if  v.zone.zone_condition[1] == CLEARED  and system.entities == 0 then
+			cond = true
+		end
+		if cond then
+				system.entities=0
 				system.scroll = math.sqrt(game.systems.scroll.x* game.systems.scroll.x, game.systems.scroll.y * game.systems.scroll.y)
 				system.x, system.y = game.systems.scroll.x, game.systems.scroll.y
 				-- TODO: actually load system
@@ -31,18 +40,21 @@ for k,v in pairs(system.targets) do
 						ent.position.y = ent.position.y + system.y
 						
 					end
+
 					if w.add then
 						for k,v in ipairs(w.add) do
 							ent[v[1]]=v[2]
 						end
 					end
 					core.entity.add(ent)
+					system.entities=system.entities+1
 					if subs then
 						for _, sub in pairs(subs) do
 							local subb = sub[1](unpack(sub))
 							subb.remove_zone=v.zone_id
-							core.entity.add(subb)
 
+							core.entity.add(subb)
+							system.entities=system.entities+1
 						end
 					end
 	
@@ -54,7 +66,6 @@ for k,v in pairs(system.targets) do
 		-- Try loading an asset preventively
 	end
 
-end
 end
 system.requirements = {zone = true, unloaded = true}
 
