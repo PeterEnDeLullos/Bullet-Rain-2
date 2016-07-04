@@ -24,6 +24,7 @@ loading.phases = {
         loading.loaded_paths = {}
         core.system.add( my_require 'systems.collision.hypercollision',  {"update"})
         core.system.add( my_require 'systems.basic_movement.rotate', {"update"})
+        core.system.add( my_require 'systems.basic_movement.move_there_and_back', {"update"})
 
         -- add my_required systems
         core.system.add( my_require 'systems.basicphysics.velocity_from_acceleration', {"update"})

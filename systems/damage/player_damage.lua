@@ -9,14 +9,12 @@ system.update = function(dt)
 		v.damaged.timer = v.damaged.timer - dt
 
 		if v.damaged.timer <= 0 then
-			print("STOP")
 			core.component.remove(v,"damaged")		
 		end
 
 	end
 end
 system.register = function(dt)
-		print("damaged9")
 		dt.damaged.timer = 1
 
 		dt.lives[1] = dt.lives[1] - 1
