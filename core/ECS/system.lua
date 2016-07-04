@@ -122,14 +122,17 @@ function core.system.remove(system)
 		end
 	end
 	for k,v in pairs(system.targets) do
-		if system.register then
+		if system.unregister then
+
 			system.unregister(v)
 			v.systems[system.name] = nil
 		end
 	end
 	game.systems[system.name] = nil
 	for k,v in pairs(game.system_categories) do
-		game.system_categories[v][system.name] = nil
+		if game.system_categories[v] then
+			game.system_categories[v][system.name] = nil
+		end
 	end
 	
 	

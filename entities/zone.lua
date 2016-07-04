@@ -3,14 +3,15 @@ MOVEMENT = 0
 CLEARED = 1
 
 local id = 0
+
 function get_new_zone(file)
  	local zone = {}
  	id =  id + 1
 
  	zone.name="zone".. id
  	zone.zone_id = id
-	zone.zone = require (file)
-	zone.unloaded = true
+	zone.zone = require (file)()
+	zone.unloaded = {true}
 	 
 	return zone
 end

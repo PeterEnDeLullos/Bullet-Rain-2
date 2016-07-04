@@ -11,7 +11,6 @@ system.update = function(dt)
 		end
 		
 for k,v in pairs(system.targets) do
-	
 	-- Loading
 	if v.zone_id == system.zone then
 		

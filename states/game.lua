@@ -12,7 +12,9 @@ end
 function ctx:update(dt)
     for k,v in core.system.orderedPairs(game.system_categories.update) do
         v.update(dt)
+
     end
+
 end
 function ctx:draw()
 

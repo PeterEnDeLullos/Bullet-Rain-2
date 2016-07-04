@@ -23,7 +23,7 @@ function core.entity.add(entity)
 end
 function core.entity.remove(entity)
 
-	if game.systems.subcomponent_reg.components[entity.id] ~= nil then
+	if game.systems.subcomponent_reg and game.systems.subcomponent_reg.components[entity.id] ~= nil then
 		for k,v in pairs(game.systems.subcomponent_reg.components[entity.id] ) do
 			core.entity.remove(v)
 		end

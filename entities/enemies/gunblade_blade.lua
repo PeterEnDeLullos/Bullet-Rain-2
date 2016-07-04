@@ -20,7 +20,7 @@ function get_gunblade_blade(_, x,y,rot,rate,sub, side)
 
  	entity.collision={moves=true,type=side}
  	entity.simple_rotation={-1}
-	entity.health={6,to_sub=1, to_self=0}
+	entity.health={6,to_sub=0, to_self=1}
 	entity.explode_on_death={5,offX=0,offY=-32}
  	entity.unshielded={1}
  	if not sub then

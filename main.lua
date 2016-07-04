@@ -31,37 +31,7 @@ function love.keypressed(key)
         end
 
     end
-    if key == "o" then
-                for k,v in pairs(game.entities) do
-            v.systems = nil
-        end
-        local t =Tserial.pack(game.entities)
-        print(t)
 
-        core.reset_game()
-
-        -- add required systems
-        core.system.add( require 'systems.velocity_from_acceleration', "update")
-        core.system.add( require 'systems.position_from_velocity', "update")
-        core.system.add( require 'systems.acceleration_from_mass', "update")
-        core.system.add( require 'systems.draw_from_mass_and_position', "draw")
-        core.system.add( require 'systems.player_input.basic_move', "update")
-        core.system.add( require 'systems.draw_functions.draw_square', "draw")
-        core.system.add( require 'systems.light_system'(), "both")
-
-        -- require entity types
-        require 'entities.agent'
-        require 'entities.planet'
-        collectgarbage("collect")
-        -- add entities
-        local u = Tserial.unpack(t)
-        print(u)
-        for k,v in pairs(u) do
-            core.entity.add(v)
-        end
-
-    end
-  
 
 end
 
