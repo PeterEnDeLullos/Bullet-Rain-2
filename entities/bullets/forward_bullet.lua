@@ -8,8 +8,11 @@ function get_forward_bullet(_, x,y,rotation,side)
  	local entity = get_empty_bullet(nil, x,y,rotation,side)
  	
  	entity.name="forward_".. entity.name
-	
-	add_straight_line_component(entity,120)
+	if side == "enemy" then
+		add_straight_line_component(entity,120)
+	else
+		add_straight_line_component(entity,500)
+	end
 	return entity
 end
 print(get_empty_bullet)

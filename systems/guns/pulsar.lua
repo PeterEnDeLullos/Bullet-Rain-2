@@ -5,7 +5,7 @@ system.name = "gun_pulsar"
 system.importance = 2
 system.update = function(dt)
 	for k,v in pairs(system.targets) do
-		if  not v.subcomponent or (game.entities[v.subcomponent.id].fire and game.entities[v.subcomponent.id].fire[v.fire_pulsar.fire_name]) then
+		if  not v.subcomponent or (game.entities[v.subcomponent.id] and game.entities[v.subcomponent.id].fire and game.entities[v.subcomponent.id].fire[v.fire_pulsar.fire_name]) then
 			
 			if v.fire_pulsar.to_fire then
 				v.fire_pulsar.to_fire = v.fire_pulsar.to_fire - dt

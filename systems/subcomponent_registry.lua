@@ -14,6 +14,19 @@ system.register = function(v)
 		system.components[v.subcomponent.id] [#system.components[v.subcomponent.id] +1]=v
 	
 end
+system.unregister = function(v)
+	for k,vv in pairs (system.components[v.subcomponent.id]) do
+
+		if vv.id == v.id then
+			system.components[v.subcomponent.id][k] = nil
+			
+		end
+	end
+	 if  system.components[v.subcomponent.id] == {} then
+	 	system.components[v.subcomponent.id] = nil
+	 end
+end
+
 
 system.requirements = {subcomponent=true}
 

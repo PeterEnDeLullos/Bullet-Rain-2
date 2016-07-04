@@ -38,18 +38,15 @@ system.register = function(v)
 			print("remove unshielded")
 			core.component.remove(main, "unshielded")
 		end
-		print(v.name)
 		core.component.add(main,"shielded",{1,v.shield[1]})
 	else
-		print(main.shielded[1])
-		error (v.name)
 		main.shielded[1] = main.shielded[1] + 1
 		main.shielded[2] = main.shielded[2]+v.shield[1]
 	end
 end
 system.unregister = function (v)
 	local main = game.entities[v.subcomponent.id]
-	if main.shielded then
+	if main and main.shielded then
 		print("MAIN")
 		main.shielded[1] = main.shielded[1] -1
 		print(main.shielded[1])
