@@ -11,7 +11,7 @@ function get_forward_bullet(_, x,y,rotation,side)
 	if side == "enemy" then
 		add_straight_line_component(entity,120)
 	else
-		add_straight_line_component(entity,500)
+		add_straight_line_component(entity,900)
 	end
 	return entity
 end
