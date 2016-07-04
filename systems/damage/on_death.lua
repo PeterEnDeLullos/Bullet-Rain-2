@@ -12,7 +12,6 @@ system.unregister = function(ent)
  	for k,v in pairs (ent.on_death) do
  		if game.entities[ent.subcomponent.id] then
  		if v[1] == "remove_component" then
- 			print("REM"..game.entities[ent.subcomponent.id].name..v[2])
  			core.component.remove(game.entities[ent.subcomponent.id],v[2])
  		end
  		if v[1] == "add_component" then

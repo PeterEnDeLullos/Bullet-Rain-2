@@ -5,7 +5,6 @@ function test_system.update(tt)
 function test_system.unregister(entity)
 	
 	if entity.health[1] <= 0 or ( entity.subcomponent and game.entities[entity.subcomponent.id].health[1] <= 0 ) then
-		print(entity.name, entity.position.x,entity.position.y)
 		if entity.explode_on_death.offX then
 			if entity.rotation then
 				local a = core.rotate_point(entity.rotation[1],{entity.explode_on_death.offX, entity.explode_on_death.offY})

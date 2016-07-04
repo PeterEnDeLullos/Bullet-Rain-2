@@ -13,7 +13,6 @@ system.update = function(dt)
 		core.component.add(game.entities[v.subcomponent.id],"damaged",v.damaged)
 		game.entities[v.subcomponent.id].damaged.amount = game.entities[v.subcomponent.id].damaged.amount *v.health.to_sub
 	end
-	print(v.health[1])
 	core.component.remove(v,"damaged")
 	core.component.add(v,"prev_dmg",{2})
 		if v.health[1]  < 0 then

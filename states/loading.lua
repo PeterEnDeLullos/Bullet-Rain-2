@@ -51,6 +51,7 @@ loading.phases = {
         core.system.add( my_require 'systems.image_loader',  {"update"})
         core.system.add( my_require 'systems.damage.damage',  {"update"})
         core.system.add( my_require 'systems.damage.on_death',  {"update"})
+        core.system.add( my_require 'systems.draw_lives',  {"draw_ui"})
 
         core.system.add( my_require 'systems.damage.player_damage',  {"update"})
         core.system.add( my_require 'systems.damage.dummy',  {"update"})

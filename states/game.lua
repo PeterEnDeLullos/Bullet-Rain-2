@@ -28,6 +28,9 @@ function ctx:draw()
         v.draw()
     end
     love.graphics.pop()
+  for k,v in core.system.orderedPairs(game.system_categories.draw_ui) do
+        v.draw_ui()
+    end
     local fps = love.timer.getFPS( )
     if fps == 0 then
         fps = 1000
