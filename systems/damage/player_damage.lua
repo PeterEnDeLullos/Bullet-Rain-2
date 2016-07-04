@@ -7,7 +7,9 @@ system.update = function(dt)
 	for k,v in pairs(system.targets) do
 
 		v.damaged.timer = v.damaged.timer - dt
+
 		if v.damaged.timer <= 0 then
+			print("STOP")
 			core.component.remove(v,"damaged")		
 		end
 

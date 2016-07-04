@@ -29,12 +29,22 @@ test_system.draw = function()
 			love.graphics.line(a[1]+v.position.x,a[2]+v.position.y,b[1]+v.position.x,b[2]+v.position.y,c[1]+v.position.x,c[2]+v.position.y,d[1]+v.position.x,d[2]+v.position.y,a[1]+v.position.x,a[2]+v.position.y)
 			love.graphics.pop()
 		end
-		love.graphics.setColor(255,255,255,255)
 
 		if v.render.zoom then
 			love.graphics.scale(v.render.zoom)
 		end
-		
+
+
+		if v.damaged and v.damaged.timer and v.damaged.timer*5%2<1 then
+			
+					love.graphics.setColor(255,255,255,128)
+					
+
+		else
+
+					love.graphics.setColor(255,255,255,255)
+
+		end
 		if v.animations then
 		if test_system.currents[v.id] ~= v.render.ID then
 			test_system.currents[v.id] = v.render.ID
@@ -58,6 +68,7 @@ test_system.draw = function()
 		end
 
 	end
+		love.graphics.setColor(255,255,255,255)
 		love.graphics.pop()
 
 	end
