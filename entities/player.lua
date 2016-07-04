@@ -16,7 +16,10 @@ function get_new_player(x,y)
 	player.velocity = {x=0,y=0}
 	add_simple_animation_component(player,{"/assets/ships/player ships/small.png"},{{frames = 1,dt = 0.1}},-32,-32)
 	player.render.importance=5
-  	player.col_polygon = {{0,-32},{32,32},{-32,32}, offX=0,offY=0}
+
+  	player.col_polygon = {{0,-32},{-12,0},{-8,16},{-16,24},{-8,32},{8,32},{16,24},{8,16},{12,0}, offX=0,offY=0}
+
+
   	player.collision = {moves=true, type="player"}
   	player.unshielded = {1}
   	player.lives = {4,4}

@@ -18,7 +18,6 @@ function get_split_forward_gun(_, x,y,img,rot,rate,sub, side, name)
  	--add_simple_image_component(entity,img,0,0)
  	--entity.render_still_image.importance = 7
  	entity.rotation = {rot}
- 	entity.col_polygon = {{0,-20},{-10,10},{10,10}, offX=0,offY=0}
  	entity.fire_split_forward = {x=0,y=-28,rate=rate,side=side,fire_name=name}
  	entity.collision={type=side.."_gun"}
  	if not sub then

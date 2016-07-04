@@ -165,13 +165,14 @@ for k,v in pairs(system.targets) do
 
 
 
-	local x,y= v.col_polygon.x, v.col_polygon.y
+	local x,y= 			v.position.x, v.position.y
 	if v.rotation then
 		--v.rotation[1] = v.rotation[1] + dt
 	end
 	x = x - v.col_polygon.offX
 	y = y - v.col_polygon.offY
 		if v.col_polygon.updated or (v.rotation and v.rotation[1] ~= v.col_polygon.rotation) then
+
 			v.col_polygon.updated = nil
 			local x,y,w,h = 0,0,0,0
 			if v.rotation then

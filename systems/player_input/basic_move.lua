@@ -37,6 +37,18 @@ system.update = function(dt)
 		end
 		v.velocity.x =  dx*v.speed.speed
 		v.velocity.y =  dy*v.speed.speed
+		local player = game.entities[1]
+		if love.keyboard.isDown("1") then
+		  	  	player.col_polygon = {{0,-32},{-12,0},{-8,16},{-16,24},{-8,32},{8,32},{16,24},{8,16},{12,0}, offX=0,offY=0,updated=true}
+  	  	end
+  	  	if love.keyboard.isDown("2") then
+		player.col_polygon = {{0,-32},{-8,-12},{0,-4},{8,-12}, offX=0,offY=0,updated=true}
+		end
+  		if love.keyboard.isDown("3") then 
+  			player.col_polygon = {{0,-32},{-12,0},{-32,-8},{-32,8},{-8,16},{-16,24},{-8,32},{8,32},{16,24},{8,16},{32,8},{32,-8},{12,0}, offX=0,offY=0,updated=true}
+  		end
+
+
 	end
 end
 

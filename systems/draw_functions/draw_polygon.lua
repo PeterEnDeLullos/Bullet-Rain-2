@@ -7,7 +7,7 @@ test_system.draw = function()
 			
 			love.graphics.setColor( 128,128,128,255)
 		if test_system.found[v.id] then
-		if not v.col_polygon.is_point then
+		if not v.col_polygon.is_point and v.col_polygon.rot then
 			local line = {}
 			for _,w in ipairs(v.col_polygon.rot) do
 				line[#line+1] = w[1]+v.position.x
