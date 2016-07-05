@@ -3,26 +3,6 @@ local function get_cross(a,b)
 	return "cross"
 end
 local ln = 0
-local factions = {"player","enemy"}
-local col_mode_types = {"","_beam","_bullet"}
-local col_table = {}
-for k,v in pairs(factions) do
-	for k2,v2 in pairs(factions) do
-		for k3,v3 in pairs(col_mode_types) do
-			for k4,v4 in pairs(col_mode_types) do
-				if v ~= v2 and (v3 == "" or v4 == "" ) then
-					if not col_table[v2..v4..v..v3] then
-					col_table[v..v3..v2..v4] = {v..v3,v2..v4}
-				end
-				end
-			end
-		end
-	end
-end
-
-for k,v in pairs(col_table) do
-	print(k,v[1],v[2])
-end
 local function handle_hit(a, b)
 	if a.collision.type == "player" then
 		if b.collision.type == "beam" then
@@ -60,7 +40,7 @@ local function handle_hit(a, b)
 end
 local function check_useful(a,b)
 		if a.collision.type == "player" then
-		if b.collision.type == "enemy_beam" then
+		if b.collision.type == "beam" then
 			return true
 		end
 		if b.collision.type == "enemy_bullet" then
@@ -177,24 +157,21 @@ local system = {}
 local bump = require 'lib.bump.bump'
 system.name = "hypercollision"
 system.world = bump.newWorld(32)
-system.categories={}
-system.polygons = {}
 
-for k,v in pairs(col_table) do
-	system.categories[v[1]] = {}
-	system.categories[v[2]] = {}
-
-end
 system.update = function(dt)
+				hitt=false
 
-		for k,v in pairs(system.targets) do
+for k,v in pairs(system.targets) do
 
 
 
-			local x,y= 			v.position.x, v.position.y
-
-			x = x - v.col_polygon.offX
-			y = y - v.col_polygon.offY
+	local x,y= 			v.position.x, v.position.y
+	if v.rotation then
+		--v.rotation[1] = v.rotation[1] + dt
+	end
+	x = x - v.col_polygon.offX
+	y = y - v.col_polygon.offY
+		if v.col_polygon.updated or (v.rotation and v.rotation[1] ~= v.col_polygon.rotation) then
 
 			v.col_polygon.updated = nil
 			local x,y,w,h = 0,0,0,0
@@ -204,19 +181,27 @@ system.update = function(dt)
 			else
 				x,y,w,h = get_xywh_by_polygon(v.col_polygon, 0)
 			end
-			
+			v.col_polygon.offX = x
+			v.col_polygon.offY = y
+			v.col_polygon.x = v.position.x
+			v.col_polygon.y = v.position.y
+			w = math.max(w,1)
+			h = math.max(h,1)			
+			system.world:update(v, x,y,w,h)
 		end
-	
 
+		if v.collision.moves then
 
+			v.position.x, v.position.y, cols, len = system.world:move(v, v.position.x + v.col_polygon.offX, v.position.y + v.col_polygon.offY,get_cross)
+			v.position.x, v.position.y = v.position.x - v.col_polygon.offX, v.position.y - v.col_polygon.offY
+			for _, col in pairs(cols) do
 				-- TODO: fancy check
 
-			for _,all in pairs(col_table) do
-				for _,v in pairs(system.categories[all[1]]) do
-					for _,col in pairs(system.categories[all[2]]) do
-						
-						
+				if  check_useful(col.other,col.item) or check_useful(col.item,col.other) then
+
+
 				local hit = false
+				col = col.other
 				if v.col_polygon.is_point then
 					if not col.col_polygon.is_point then -- other is a polygon, I'm a poing
 						hit = point_in_polygon(col.col_polygon.rot, {0,0}, {col.position.x,col.position.y}, {v.position.x, v.position.y})
@@ -236,24 +221,50 @@ system.update = function(dt)
 					handle_hit(col,v)
 				end
 			end
-			
-		end
+			end
+		else
+			-- Bullets
 
+			system.world:update(v, v.position.x + v.col_polygon.offX, v.position.y + v.col_polygon.offY)
+
+		end
 		
 
 	end
 end
 
 system.register = function (entity) 
-
-	system.categories[entity.collision.type][entity.id] = entity
-	system.polygons[entity.id] = {}
-
+	local w,h,x,y = 0,0,entity.position.x,entity.position.y
+	if entity.col_polygon.is_point then
+		w = 10
+		h = 10
+		entity.col_polygon.offX = 5
+		entity.col_polygon.offY = 5
+		entity.col_polygon.x = x-5
+		entity.col_polygon.y = y-5
+		x = x - w/2
+		y = y - h/2
+	else
+		if entity.rotation then
+			x,y,w,h = get_xywh_by_polygon(entity.col_polygon, entity.rotation[1])
+		else
+			x,y,w,h = get_xywh_by_polygon(entity.col_polygon, 0)
+		end
+		entity.col_polygon.offX = x
+		entity.col_polygon.offY = y
+		entity.col_polygon.x = entity.position.x
+		entity.col_polygon.y = entity.position.y
+	end
+	w = math.max(w,1)
+	h = math.max(h,1)
+	entity.col_polygon.rot[1][1] = -100
+	entity.col_polygon.updated = true
+	system.world:add(entity, entity.position.x , entity.position.y,w,h)
 end
 system.unregister = function (entity)
-	system.categories[entity.collision.type][entity.id] = nil
-	system.polygons[entity.id] = nil
-
+	if  system.world:hasItem(entity) then
+	system.world:remove(entity)
+end
 end
 system.requirements = {position=true, col_polygon = true, collision=true}
 
