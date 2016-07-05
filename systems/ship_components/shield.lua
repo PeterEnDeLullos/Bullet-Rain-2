@@ -10,17 +10,14 @@ system.update = function(dt)
 		if main.damaged then
 			local final = main.damaged.amount-v.shield[1]
 			v.shield[1] = v.shield[1] - main.damaged.amount
-			print("Shield at "..v.shield[1])
-			if v.shield[1] <= 0 then
-				print("remove damage")
+			print("Shield at "..v.shield[1], main.damaged.amount)
+			if v.shield[1] >= 0 then
 				core.component.remove(main,"damaged")
 			end
 			if 0>=v.shield[1] then
-				print("Removing")
 				core.entity.remove(v)
 			end
 			if main.damaged then
-				print("damaged")
 				main.damaged.amount = final
 			end
 		end
@@ -57,7 +54,7 @@ system.unregister = function (v)
 		end
 	else
 			print(v.name)
-			
+
 	end
 end
 system.requirements = {shield=true,subcomponent=true}

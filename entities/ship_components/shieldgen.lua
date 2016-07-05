@@ -1,10 +1,9 @@
 local id = 0
-function get_shield(_, sub, side)
+function get_shield_generator(_, sub,max,per)
  	local entity = {}
  	id =  id + 1
  	entity.name="shield".. id
 
-	entity.position = {x=0,0}
 	if not(sub) then
 		error "shieldgens must have a subsystem"
 	end
@@ -13,12 +12,7 @@ function get_shield(_, sub, side)
 	
  	--add_simple_image_component(entity,img,0,0)
  	--entity.render_still_image.importance = 7
- 	entity.rotation = {rot}
- 	entity.simple_rotation={-1}
-
- 	entity.col_polygon = {{0,-40},{40,0},{0,40},{-40,0, offX=20,offY=0}
- 	entity.shield = {1}
- 	entity.collision={type=side.."_shieldgen"}
+ 	entity.shield_gen = {max=max,per=per}
 
 	return entity
 

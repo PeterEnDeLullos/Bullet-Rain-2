@@ -70,6 +70,8 @@ loading.phases = {
         core.system.add( my_require 'systems.draw_direction_debug',  {"draw"})
         core.system.add( my_require 'systems.aim_class',  {"update"})
         core.system.add( my_require 'systems.ship_components.shield', {"update"})
+        core.system.add( my_require 'systems.ship_components.shieldgen', {"update"})
+
         core.system.add( my_require 'systems.bullet_movement.straight_line_bullet_bahavior', {"update"})
         next_id = function ()
     local id = 0
@@ -94,14 +96,10 @@ next_id = next_id()
         local entity = core.entity.add(get_new_player(700,300))
         
         my_require ('levels.level1')()
-        local a = get_new_shield(_,entity,"player",1)
+        my_require ('entities.ship_components.shieldgen')
+        local a = get_shield_generator(_,entity,3,1)
         core.entity.add(a)
-        for k,v in pairs(game.entities) do
-            print(k,v.name)
-        end
-         if entity.shielded[1] ~= 1 then
-             error(entity.shielded[1])
-        end
+
         my_require 'entities.guns.forward_gun'
         my_require 'entities.guns.split_forward_gun'
 
