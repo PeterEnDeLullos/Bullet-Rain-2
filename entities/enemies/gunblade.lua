@@ -20,7 +20,7 @@ function get_gunblade(_, x,y, side,rev)
  	else
  		add_there_and_back(entity,{{x=1,y=0,speed=50,time=10,now=0},{x=0,y=1,speed=50,time=2.5,now=0}})
  	end
- 	blades = {}
+ 	local blades = {}
  	blades[1] = {get_gunblade_blade, 0,0,0, 0.7,entity, side}
  	blades[2] = {get_gunblade_blade, 0,0,0.5*math.pi,0.7,entity, side}
  	blades[3] = {get_gunblade_blade, 0,0,math.pi,0.7,entity, side}

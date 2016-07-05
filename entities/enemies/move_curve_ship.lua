@@ -7,7 +7,7 @@ local id = 0
 function get_move_curve_ship(_, x,y, side,curve)
  	local entity = {}
  	id =  id + 1
- 	entity.name="pulsar".. id
+ 	entity.name="curve_ship".. id
 
 	entity.position = {x=x,y=y}
  	entity.rotation = {math.pi}
@@ -22,6 +22,6 @@ function get_move_curve_ship(_, x,y, side,curve)
  	entity.health={1}
  	entity.unshielded={1}
  	entity.fire={pulsar_gun=true}
-	return entity, blades
+	return entity
 
 end

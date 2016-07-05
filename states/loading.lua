@@ -105,9 +105,9 @@ next_id = next_id()
         my_require 'entities.guns.forward_gun'
         my_require 'entities.guns.split_forward_gun'
 
-        core.entity.add(get_forward_gun(nil, -10,0,nil,0,3,game.entities[1],"player","left"))
-        core.entity.add(get_forward_gun(nil, 10,0,nil,0,3,game.entities[1],"player","right"))
-        core.entity.add(get_split_forward_gun(nil, 0,0,nil,0,2,game.entities[1],"player","center"))
+        core.entity.add(get_forward_gun(nil, -10,0,nil,0,6,game.entities[1],"player","left"))
+        core.entity.add(get_forward_gun(nil, 10,0,nil,0,6,game.entities[1],"player","right"))
+        core.entity.add(get_split_forward_gun(nil, 0,0,nil,0,4,game.entities[1],"player","center"))
 
 end,
     function()

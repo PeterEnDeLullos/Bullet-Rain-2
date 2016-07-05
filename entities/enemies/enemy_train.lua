@@ -8,7 +8,8 @@ function get_spawn_queue(_,queue,is_absolute, dt)
  	entity.spawn_queue.is_absolute=is_absolute
  	entity.spawn_queue.at = 1
  	entity.spawn_queue.dt = dt
-
+	entity.no_scroll = {multiplier = 1}
+	
 	return entity
 
 end

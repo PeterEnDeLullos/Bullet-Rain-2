@@ -37,7 +37,7 @@ system.register = function(entity)
 end
 system.unregister = function(entity)
 		system.curves[entity.id] = nil 
-					print("FINISHED")
+
 
 end
 

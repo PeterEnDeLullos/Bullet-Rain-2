@@ -56,7 +56,8 @@ system.unregister = function (v)
 			print("Unshielded")
 		end
 	else
-		print("no shield?")
+			print(v.name)
+			
 	end
 end
 system.requirements = {shield=true,subcomponent=true}

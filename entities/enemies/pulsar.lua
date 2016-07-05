@@ -16,7 +16,7 @@ function get_pulsar(_, x,y, side, bezier)
 	entity.curved_move={speed=0.1,trace= bezier}
 	entity.delete_bezier_when_finished = {1}
 end
- 	blades = {}
+ 	local blades = {}
  	blades[1] = {get_pulsar_left, entity, side}
  	blades[2] = {get_pulsar_right, entity, side}
  	blades[3] = {get_pulsar_gun, 0,0,nil,0,1/2,entity, side,"pulsar_gun"}

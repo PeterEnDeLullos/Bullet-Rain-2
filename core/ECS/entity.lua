@@ -35,7 +35,7 @@ function core.entity.remove(entity)
 		end
 	end
 end
-function core.entity.spawn(w, zone_id)
+function core.entity.spawn(w, zone_id,absolute)
 	local da = 0
 					local ent, subs = w[1](unpack(w))
 
