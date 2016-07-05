@@ -1,18 +1,35 @@
-
-	require 'entities.aim_enemy'
-require 'entities.empty_line'
-require 'entities.enemies.gunblade'
-require 'entities.enemies.pulsar'
-return  function() 
-
+require 'entities.enemies.spawn_queue'
+require 'entities.enemies.move_curve_ship'
+return function()
 local entities = {}
---entities[1] = {get_aim_enemy, -20, 270}
---entities[2] = {get_aim_enemy, 200, 100}
-entities[1] = {get_gunblade, 300, 100, "enemy"}
-entities[2] = {get_gunblade, 1000, 100, "enemy",1}
-entities[3] = {get_pulsar, 700, 300, "enemy"}
+print("HOI")
 
---entities[4] = {get_empty_line, 100, 300,400,0}
+local line = {}
+	for i = 1,20 do
+		line[#line+1] = {"get_move_curve_ship","enemy", {{0,0},{900,0},{900,800}}}
+	end
+	entities[1] = {get_spawn_queue, -100, 100,line,true,1}
+	
 
-return {entities = entities, zone_condition = {MOVEMENT, 0}, unloaded = true}
+	line = {}
+	for i = 1,20 do
+		line[#line+1] = {"get_move_curve_ship","enemy", {{0,0},{-900,0},{-900,800}}}
+	end
+	entities[2] = {get_spawn_queue, 1466, 100,line,true,1}
+	
+
+
+		line = {}
+	for i = 1,20 do
+		line[#line+1] = {"get_move_curve_ship","enemy", {{0,0},{-900,0},{-900,-800}}}
+	end
+	entities[3] = {get_spawn_queue, 1466, 700,line,true,1}
+	
+
+	line = {}
+	for i = 1,20 do
+		line[#line+1] = {"get_move_curve_ship","enemy", {{0,0},{900,0},{900,-800}}}
+	end
+	entities[4] = {get_spawn_queue, -100, 700,line,true,1}
+	return {entities = entities, zone_condition = {MOVEMENT, 0}, unloaded = true}
 end

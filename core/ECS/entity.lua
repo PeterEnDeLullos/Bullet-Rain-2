@@ -35,3 +35,33 @@ function core.entity.remove(entity)
 		end
 	end
 end
+function core.entity.spawn(w, zone_id)
+	local da = 0
+					local ent, subs = w[1](unpack(w))
+
+					ent.remove_zone = zone_id
+					if ent.position then
+						ent.position.x = ent.position.x + game.systems.scroll.x
+						
+						ent.position.y = ent.position.y + game.systems.scroll.y
+						
+					end
+
+					if w.add then
+						for k,v in ipairs(w.add) do
+							ent[v[1]]=v[2]
+						end
+					end
+					core.entity.add(ent)
+					da = da +1
+					if subs then
+						for _, sub in pairs(subs) do
+							local subb = sub[1](unpack(sub))
+							subb.remove_zone=zone_id
+
+							core.entity.add(subb)
+							da = da +1
+						end
+					end
+					return da
+end

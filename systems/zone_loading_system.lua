@@ -31,32 +31,7 @@ for k,v in pairs(system.targets) do
 				system.x, system.y = game.systems.scroll.x, game.systems.scroll.y
 				-- TODO: actually load system
 				for l, w in pairs(v.zone.entities) do
-					local ent, subs = w[1](unpack(w))
-
-					ent.remove_zone = v.zone_id
-					if ent.position then
-						ent.position.x = ent.position.x + system.x
-						
-						ent.position.y = ent.position.y + system.y
-						
-					end
-
-					if w.add then
-						for k,v in ipairs(w.add) do
-							ent[v[1]]=v[2]
-						end
-					end
-					core.entity.add(ent)
-					system.entities=system.entities+1
-					if subs then
-						for _, sub in pairs(subs) do
-							local subb = sub[1](unpack(sub))
-							subb.remove_zone=v.zone_id
-
-							core.entity.add(subb)
-							system.entities=system.entities+1
-						end
-					end
+					system.entities = system.entities + core.entity.spawn(w, v.zone_id)
 	
 				end
 				core.component.remove(v, "unloaded")

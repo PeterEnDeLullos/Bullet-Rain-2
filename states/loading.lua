@@ -25,6 +25,12 @@ loading.phases = {
         core.system.add( my_require 'systems.collision.hypercollision',  {"update"})
         core.system.add( my_require 'systems.basic_movement.rotate', {"update"})
         core.system.add( my_require 'systems.basic_movement.move_there_and_back', {"update"})
+        core.system.add( my_require 'systems.basic_movement.move_bezier', {"update"})
+        core.system.add( my_require 'systems.basic_movement.reverse_bezier', {"update"})
+        core.system.add( my_require 'systems.basic_movement.delete_on_bezier_end', {"update"})
+                core.system.add( my_require 'systems.delayed_add_component', {"update"})
+
+                core.system.add( my_require 'systems.spawn_queued_enemies', {"update"})
 
         -- add my_required systems
         core.system.add( my_require 'systems.basicphysics.velocity_from_acceleration', {"update"})
