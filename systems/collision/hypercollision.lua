@@ -191,12 +191,6 @@ system.update = function(dt)
 
 
 
-			local x,y= 			v.position.x, v.position.y
-
-			x = x - v.col_polygon.offX
-			y = y - v.col_polygon.offY
-
-			v.col_polygon.updated = nil
 			local x,y,w,h = 0,0,0,0
 			if v.rotation then
 				x,y,w,h = get_xywh_by_polygon(v.col_polygon, v.rotation[1]) -- also refreshes rotated polygon
