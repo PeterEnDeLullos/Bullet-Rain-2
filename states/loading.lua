@@ -45,6 +45,7 @@ loading.phases = {
         core.system.add( my_require 'systems.draw_functions.draw_polygon',  {"draw"})
         core.system.add( my_require 'systems.guns.forward',  {"update"})
         core.system.add( my_require 'systems.guns.split_forward',  {"update"})
+        core.system.add( my_require 'systems.guns.forward_beam',  {"update"})
 
         core.system.add( my_require 'systems.guns.pulsar',  {"update"})
 
@@ -97,14 +98,17 @@ next_id = next_id()
         
         my_require ('levels.level1')()
         my_require ('entities.ship_components.shieldgen')
-        local a = get_shield_generator(_,entity,3,1)
+        local a = get_shield_generator(_,entity,3,10)
+
+
         core.entity.add(a)
+        
 
         my_require 'entities.guns.forward_gun'
         my_require 'entities.guns.split_forward_gun'
 
-        core.entity.add(get_forward_gun(nil, -10,0,nil,0,6,game.entities[1],"player","left"))
-        core.entity.add(get_forward_gun(nil, 10,0,nil,0,6,game.entities[1],"player","right"))
+        core.entity.add(get_forward_beam_gun(nil, -10,0,nil,0,1,game.entities[1],"player","left"))
+        core.entity.add(get_forward_beam_gun(nil, 10,0,nil,0,1,game.entities[1],"player","right"))
         core.entity.add(get_split_forward_gun(nil, 0,0,nil,0,4,game.entities[1],"player","center"))
 
 end,

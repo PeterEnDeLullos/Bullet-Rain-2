@@ -42,7 +42,7 @@ test_system.draw = function()
 
 		else
 
-					love.graphics.setColor(255,0,0,128)
+					love.graphics.setColor(255,255,255,255)
 
 		end
 		if v.animations then

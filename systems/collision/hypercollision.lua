@@ -23,7 +23,7 @@ end
 for k,v in pairs(col_table) do
 	print(k,v[1],v[2])
 end
-local function handle_hit(a, b)
+local function handle_hit(a, b, dt)
 	if a.collision.type == "player" then
 		if b.collision.type == "beam" then
 			if not a.damaged then
@@ -46,7 +46,7 @@ local function handle_hit(a, b)
 	if a.collision.type == "enemy" then
 		if b.collision.type == "player_beam" then
 			if not a.damaged then
-				core.component.add(a,"damaged",{type="beam",amount = 1})
+				core.component.add(a,"damaged",{type="beam",amount = dt*10})
 			end
 		end
 		if b.collision.type == "player_bullet" then
@@ -226,8 +226,8 @@ system.update = function(dt)
 				if hit then
 
 					ln = ln  + 1
-					handle_hit(v,col)
-					handle_hit(col,v)
+					handle_hit(v,col,dt)
+					handle_hit(col,v,dt)
 				end
 			end
 			
