@@ -46,7 +46,7 @@ local function handle_hit(a, b, dt)
 	if a.collision.type == "enemy" then
 		if b.collision.type == "player_beam" then
 			if not a.damaged then
-				core.component.add(a,"damaged",{type="beam",amount = dt*10})
+				core.component.add(a,"damaged",{type="beam",amount = dt*4})
 			end
 		end
 		if b.collision.type == "player_bullet" then

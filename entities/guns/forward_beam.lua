@@ -18,7 +18,7 @@ function get_forward_beam_gun(_, x,y,img,rot,rate,sub, side, name)
  	--add_simple_image_component(entity,img,0,0)
  	--entity.render_still_image.importance = 7
  	entity.rotation = {rot}
- 	entity.fire_beam = {x=0,y=-28,rate=rate,side=side,fire_name=name,t=0.1}
+ 	entity.fire_beam = {x=0,y=-28,rate=rate,side=side,fire_name=name,t=1}
  	entity.collision={type=side.."_gun"}
  	if not sub then
  		entity.aims_for_entity = {entity=1}
