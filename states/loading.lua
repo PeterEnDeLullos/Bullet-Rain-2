@@ -109,7 +109,7 @@ next_id = next_id()
 
         core.entity.add(get_forward_beam_gun(nil, -10,0,nil,0,0.4,game.entities[1],"player","left"))
         core.entity.add(get_forward_beam_gun(nil, 10,0,nil,0,0.4,game.entities[1],"player","right"))
-        core.entity.add(get_split_forward_gun(nil, 0,0,nil,0,0.4,game.entities[1],"player","center"))
+        core.entity.add(get_split_forward_gun(nil, 0,0,nil,0,10,game.entities[1],"player","center"))
 
 end,
     function()
