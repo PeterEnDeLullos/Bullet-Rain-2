@@ -15,7 +15,7 @@ system.update = function(dt)
 					 v.fire_beam.to_fire =1/v.fire_beam.rate
 					 print("HOI")
 					 local tt = core.rotate_point(v.rotation[1], {v.fire_beam.x,v.fire_beam.y})
-					 local b = get_forward_beam(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1],v.fire_beam.side,v,v.fire_beam.t)
+					 local b = game.entity_definitions.bullets.beam(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1],v.fire_beam.side,v,v.fire_beam.t)
 					 core.entity.add(b)
 		
 					end

@@ -1,10 +1,7 @@
-require 'components.simple_image'
-require 'entities.enemies.pulsar_left'
-require 'entities.enemies.pulsar_right'
-require 'entities.guns.pulsar_gun'
+
 
 local id = 0
-function get_move_curve_ship(_, x,y, side,curve)
+return function(_, x,y, side,curve)
  	local entity = {}
  	id =  id + 1
  	entity.name="curve_ship".. id

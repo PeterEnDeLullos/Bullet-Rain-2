@@ -1,5 +1,5 @@
 local id = 0
-function get_new_planet(x,y,w)
+return function(x,y,w)
  	local entity = {}
  	id =  id + 1
  	entity.name="planet".. id

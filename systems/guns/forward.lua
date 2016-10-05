@@ -1,4 +1,3 @@
-require 'entities.bullets.forward_bullet'
 local system = {}
 
 system.name = "gun_forward"
@@ -13,7 +12,7 @@ system.update = function(dt)
 				if v.fire_forward.to_fire < 0 then
 					 v.fire_forward.to_fire =1/v.fire_forward.rate
 					 local tt = core.rotate_point(v.rotation[1], {v.fire_forward.x,v.fire_forward.y})
-					 local b = get_forward_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1],v.fire_forward.side)
+					 local b = game.entity_definitions.bullets.forward_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1],v.fire_forward.side)
 					 core.entity.add(b)
 		
 					end

@@ -1,6 +1,5 @@
-require 'components.simple_image'
 local id = 0
-function get_background_layer(_, x,y,img,mult,lay,sub)
+return function(_, x,y,img,mult,lay,sub)
  	local entity = {}
  	id =  id + 1
  	entity.name="bg_layer".. id
@@ -12,9 +11,10 @@ function get_background_layer(_, x,y,img,mult,lay,sub)
 	
 	entity.no_scroll = {multiplier = mult}
 	
- 	add_simple_image_component(entity,img,0,0)
+ 	game.component_definitions.simple_image(entity,img,0,0)
  	entity.render.importance = lay
-	entity.render.zoom = 4
+	entity.render.zoom = 2
+	entity.render.wrappingMode = "mirroredrepeat"
 
  	
 	return entity

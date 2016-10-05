@@ -12,9 +12,9 @@ system.update = function(dt)
 				if v.fire_split_forward.to_fire < 0 then
 					 v.fire_split_forward.to_fire =1/v.fire_split_forward.rate
 					 local tt = core.rotate_point(v.rotation[1], {v.fire_split_forward.x,v.fire_split_forward.y})
-					 local b = get_forward_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1]-0.2,v.fire_split_forward.side)
+					 local b =  game.entity_definitions.bullets.forward_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1]-0.2,v.fire_split_forward.side)
  					 core.entity.add(b)
- 					 b = get_forward_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1]+0.2,v.fire_split_forward.side)
+ 					 b =  game.entity_definitions.bullets.forward_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1]+0.2,v.fire_split_forward.side)
 
 					 core.entity.add(b)
 		

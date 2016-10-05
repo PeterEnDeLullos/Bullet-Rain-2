@@ -1,7 +1,9 @@
 --- 1. Graphics loading
 --- 2. Graphics displaying
----3. Polygon displaying system
----4. Collision
----4.1. Making the polygons relative
----4.2. Using the collisions usefully
----5. Animation
+--- 3. Polygon displaying system
+--- 4. Collision
+--- 4.1. Making the polygons relative
+--- 4.2. Using the collisions usefully
+--- 5. Animation
+- 6. Moving all entities and components to relative paths
+- 7. Test animation system

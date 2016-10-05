@@ -1,5 +1,5 @@
 local id = 0
-function get_empty_bullet(_, x,y,rotation,side)
+return function(_, x,y,rotation,side)
  	local entity = {}
  	id =  id + 1
  	entity.name="simple_bullet".. id

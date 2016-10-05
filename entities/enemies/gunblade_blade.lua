@@ -1,5 +1,5 @@
 local id = 0
-function get_gunblade_blade(_, x,y,rot,rate,sub, side)
+return function(_, x,y,rot,rate,sub, side)
  	local entity = {}
  	id =  id + 1
  	entity.name="gunblade_blade".. id
@@ -11,7 +11,7 @@ function get_gunblade_blade(_, x,y,rot,rate,sub, side)
 	
 	entity.no_scroll = {multiplier = 1}
 	
- 	add_simple_image_component(entity,"/assets/ships/enemy ships/gunblade/gunblade blade.png",-8,-64)
+ 	game.component_definitions.simple_image(entity,"/assets/ships/enemy ships/gunblade/gunblade blade.png",-8,-64)
  	entity.render.importance = 6.9
  	entity.rotation = {rot}
  	entity.col_polygon = {{-8,-18},{-8,-40},{8,-40}, {8,-18}, offX=0,offY=0}

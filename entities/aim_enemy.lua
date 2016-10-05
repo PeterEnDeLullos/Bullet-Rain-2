@@ -1,6 +1,6 @@
 require 'components.simple_image'
 local id = 0
-function get_aim_enemy(_, x,y,w)
+return function(_, x,y,w)
  	local entity = {}
  	id =  id + 1
  	entity.name="aim_enemy".. id

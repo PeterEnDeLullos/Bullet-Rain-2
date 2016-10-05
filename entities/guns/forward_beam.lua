@@ -1,6 +1,6 @@
 
 local id = 0
-function get_forward_beam_gun(_, x,y,img,rot,rate,sub, side, name)
+return function(_, x,y,img,rot,rate,sub, side, name)
 	if not name then
 		name="gun"
 	end

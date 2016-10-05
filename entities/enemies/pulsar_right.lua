@@ -1,5 +1,5 @@
 local id = 0
-function get_pulsar_right(_,sub, side)
+return function(_,sub, side)
  	local entity = {}
  	id =  id + 1
  	entity.name="pulsar_right".. id
@@ -11,7 +11,7 @@ function get_pulsar_right(_,sub, side)
 	
 	entity.no_scroll = {multiplier = 1}
 	
- 	add_simple_image_component(entity,"/assets/ships/enemy ships/pulsar/pulsar_right.png",-34,-44)
+ 	game.component_definitions.simple_image(entity,"/assets/ships/enemy ships/pulsar/pulsar_right.png",-34,-44)
  	entity.render.importance = 6.9
  	entity.rotation = {0}
  	entity.col_polygon = { {4,-14},{6,-34},{12,-27},{18,-6},{18,0},{13,10},{4,24}, offX=23,offY=24}

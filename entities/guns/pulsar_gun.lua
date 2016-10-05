@@ -1,6 +1,6 @@
 
 local id = 0
-function get_pulsar_gun(_, x,y,img,rot,rate,sub, side, name)
+return function(_, x,y,img,rot,rate,sub, side, name)
  	local entity = {}
  	id =  id + 1
  	entity.name="forward_gun".. id

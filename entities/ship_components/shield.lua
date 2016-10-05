@@ -1,5 +1,5 @@
 local id = 0
-function get_new_shield(_, sub, side,value)
+return function(_, sub, side,value)
  	local entity = {}
  	id =  id + 1
  	entity.name="shield".. id

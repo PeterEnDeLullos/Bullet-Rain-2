@@ -1,4 +1,3 @@
-require 'entities.bullets.pulsar_bullet'
 local system = {}
 
 system.name = "gun_pulsar"
@@ -12,7 +11,7 @@ system.update = function(dt)
 				if v.fire_pulsar.to_fire < 0 then
 					 v.fire_pulsar.to_fire =1/v.fire_pulsar.rate
 					 local tt = core.rotate_point(v.rotation[1], {v.fire_pulsar.x,v.fire_pulsar.y})
-					 core.entity.add(get_pulsar_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1],v.fire_pulsar.side))
+					 core.entity.add(game.entity_definitions.bullets.pulsar_bullet(nil,v.position.x+tt[1], v.position.y+tt[2],v.rotation[1],v.fire_pulsar.side))
 
 					end
 			else

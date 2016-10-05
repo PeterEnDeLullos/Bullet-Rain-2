@@ -4,7 +4,7 @@ CLEARED = 1
 
 local id = 0
 
-function get_new_zone(file)
+return function(file)
  	local zone = {}
  	id =  id + 1
 

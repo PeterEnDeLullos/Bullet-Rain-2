@@ -2,6 +2,16 @@ local system = {}
 
 system.name = "spawn_queue"
 system.importance = 2
+local function get_from_path(url)
+	local a = game.entity_definitions
+	    for word in string.gmatch(url, '([^.]+)') do
+	    	print("|?")
+	    	print(a)
+	    		a = a [word]
+	    	
+	    end
+	    return a
+end
 system.update = function(dt)
 	for k,v in pairs(system.targets) do
 		if v.spawn_queue.at > #v.spawn_queue then
@@ -12,7 +22,7 @@ system.update = function(dt)
 			if v.spawn_queue.t <= 0 then
 				v.spawn_queue.t = v.spawn_queue.wait
 				local actual = {}
-				actual[1] = _G[v.spawn_queue[v.spawn_queue.at][1]]
+				actual[1] = get_from_path(v.spawn_queue[v.spawn_queue.at][1])
 				if v.spawn_queue.is_absolute then
 				actual[2] = v.spawn_queue.x
 				actual[3] = v.spawn_queue.y
@@ -23,8 +33,10 @@ system.update = function(dt)
 				for l,w in ipairs(v.spawn_queue[v.spawn_queue.at]) do
 					if l ~= 1 then
 						actual[l+2] = w
+						print(w)
 					end
 				end
+
 				core.entity.spawn(actual)
 				v.spawn_queue.at=v.spawn_queue.at+1
 			end

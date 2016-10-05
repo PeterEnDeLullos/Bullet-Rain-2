@@ -1,5 +1,5 @@
 local id = 0
-function get_shield_generator(_, sub,max,per)
+return function(_, sub,max,per)
  	local entity = {}
  	id =  id + 1
  	entity.name="shield".. id

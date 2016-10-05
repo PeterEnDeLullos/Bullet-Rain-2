@@ -4,7 +4,7 @@ require 'entities.empty_line'
 require 'components.simple_image'
 local id = 0
 print("LOAD MEH")
-function get_forward_beam(_, x,y,rotation,side, sub,t)
+return function (_, x,y,rotation,side, sub,t)
 	local dx, dy = 1000*math.sin(rotation),-1000*math.cos(rotation)
 
  	local entity = {}

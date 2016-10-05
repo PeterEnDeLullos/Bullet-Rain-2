@@ -7,6 +7,63 @@ local function my_require (str)
     return require (str)
 end
 
+
+local function load_component_definition(url)
+    local a = game.component_definitions
+    local b = game.component_definitions
+    local last_word = ""
+    local first = true
+    print("HERE")
+    for word in string.gmatch(url, '([^.]+)') do
+        print(">"..word)
+        if not first then
+            b = a
+            last_word = word
+            if not a[word] then
+                a[word] = {}
+            end
+            a = a[word]
+        end
+        first=false
+    end
+    b[last_word] =  my_require (url)
+end
+local function load_entity_definition(url)
+    local a = game.entity_definitions
+    local b = game.entity_definitions
+    local last_word = ""
+    local first = true
+    print("HERE")
+    for word in string.gmatch(url, '([^.]+)') do
+        print(">"..word)
+        if not first then
+            b = a
+            last_word = word
+            if not a[word] then
+                a[word] = {}
+            end
+            a = a[word]
+        end
+        first=false
+    end
+    b[last_word] =  my_require (url)
+end
+local function recursiveEnumerate(folder, fileTree, file_loader)
+    local lfs = love.filesystem
+    local filesTable = lfs.getDirectoryItems(folder)
+    for i,v in ipairs(filesTable) do
+        local file = folder.."/"..v
+        if lfs.isFile(file) then
+            fileTree = fileTree.."\n"..string.gsub(string.gsub(file,"/","."),".lua","")
+            file_loader(string.gsub(string.gsub(file,"/","."),".lua",""))
+        elseif lfs.isDirectory(file) then
+            fileTree = recursiveEnumerate(file, fileTree, file_loader)
+        end
+    end
+    return fileTree
+end
+
+
 loading.phases = {
     core.reset_game,
     function()
@@ -31,6 +88,7 @@ loading.phases = {
                 core.system.add( my_require 'systems.delayed_add_component', {"update"})
 
                 core.system.add( my_require 'systems.spawn_queued_enemies', {"update"})
+        core.system.add( my_require 'systems.map_loading.sti_loading', {"draw"})
 
         -- add my_required systems
         core.system.add( my_require 'systems.basicphysics.velocity_from_acceleration', {"update"})
@@ -62,17 +120,14 @@ loading.phases = {
         core.system.add( my_require 'systems.damage.damage',  {"update"})
         core.system.add( my_require 'systems.damage.on_death',  {"update"})
         core.system.add( my_require 'systems.draw_lives',  {"draw_ui"})
-
         core.system.add( my_require 'systems.damage.player_damage',  {"update"})
         core.system.add( my_require 'systems.damage.dummy',  {"update"})
         core.system.add( my_require 'systems.explosions.boem_on_death',  {"update"})
-
-        --core.system.add( my_require 'systems.entity_remain_within_camera',  {"update"})
+        
         core.system.add( my_require 'systems.draw_direction_debug',  {"draw"})
         core.system.add( my_require 'systems.aim_class',  {"update"})
         core.system.add( my_require 'systems.ship_components.shield', {"update"})
         core.system.add( my_require 'systems.ship_components.shieldgen', {"update"})
-
         core.system.add( my_require 'systems.bullet_movement.straight_line_bullet_bahavior', {"update"})
         next_id = function ()
     local id = 0
@@ -86,30 +141,29 @@ next_id = next_id()
         -- require component types
     end, 
     function()
-        my_require 'components.simple_image'
         -- require entity types
-        
-        my_require 'entities.effects.boem'
-        my_require 'entities.player'
-        
-        my_require 'entities.zone'
+        print(load_entity_definition)
+        print(recursiveEnumerate("entities","entities", load_entity_definition))
+        print(recursiveEnumerate("components","components", load_component_definition))
 
-        local entity = core.entity.add(get_new_player(700,300))
+        
+        print(">.>")
+
+        local entity = core.entity.add(game.entity_definitions.player(700,300))
         
         my_require ('levels.level1')()
-        my_require ('entities.ship_components.shieldgen')
-        local a = get_shield_generator(_,entity,3,10)
+        
+        local a = game.entity_definitions.ship_components.shieldgen(_,entity,3,10)
 
 
         core.entity.add(a)
         
 
-        my_require 'entities.guns.forward_gun'
-        my_require 'entities.guns.split_forward_gun'
+        local aaaa= core.entity.add({sti_map={file="assets/collision/test.lua"}})
 
-        core.entity.add(get_forward_beam_gun(nil, -10,0,nil,0,0.4,game.entities[1],"player","left"))
-        core.entity.add(get_forward_beam_gun(nil, 10,0,nil,0,0.4,game.entities[1],"player","right"))
-        core.entity.add(get_split_forward_gun(nil, 0,0,nil,0,10,game.entities[1],"player","center"))
+        core.entity.add(game.entity_definitions.guns.forward_beam(nil, -10,0,nil,0,0.4,game.entities[1],"player","left"))
+        core.entity.add(game.entity_definitions.guns.forward_beam(nil, 10,0,nil,0,0.4,game.entities[1],"player","right"))
+        core.entity.add(game.entity_definitions.guns.split_forward_gun(nil, 0,0,nil,0,10,game.entities[1],"player","center"))
 
 end,
     function()

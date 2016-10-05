@@ -1,4 +1,4 @@
-function add_simple_animation_component(entity,urls,animations, offX, offY)
+return function(entity,urls,animations, offX, offY)
 	entity.images = urls
 	entity.images_unloaded = {1}
 

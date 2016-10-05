@@ -16,7 +16,7 @@ system.update = function(dt)
 					game.entities[entity.shield_gen.shield].shield[1] = math.min(game.entities[entity.shield_gen.shield].shield[1] + 1, entity.shield_gen.max)
 				
 			else
-				local a = get_new_shield(_,game.entities[entity.subcomponent.id],"player",1)
+				local a = game.entity_definitions.ship_components.shield(_,game.entities[entity.subcomponent.id],"player",1)
         		core.entity.add(a)
         		entity.shield_gen.shield = a.id
 			end

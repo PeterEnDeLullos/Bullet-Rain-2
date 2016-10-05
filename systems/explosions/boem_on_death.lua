@@ -7,12 +7,12 @@ function test_system.unregister(entity)
 		if entity.explode_on_death.offX then
 			if entity.rotation then
 				local a = core.rotate_point(entity.rotation[1],{entity.explode_on_death.offX, entity.explode_on_death.offY})
-				core.entity.add(get_new_explosion(entity.position.x+a[1],entity.position.y+a[2],entity.explode_on_death[1]))
+				core.entity.add(game.entity_definitions.effects.boem(entity.position.x+a[1],entity.position.y+a[2],entity.explode_on_death[1]))
 			else
-				core.entity.add(get_new_explosion(entity.position.x+entity.explode_on_death.offX,entity.position.y+entity.explode_on_death.offY,entity.explode_on_death[1]))
+				core.entity.add(game.entity_definitions.effects.boem(entity.position.x+entity.explode_on_death.offX,entity.position.y+entity.explode_on_death.offY,entity.explode_on_death[1]))
 			end
 		else
-			core.entity.add(get_new_explosion(entity.position.x,entity.position.y,entity.explode_on_death[1]))
+			core.entity.add(game.entity_definitions.effects.boem(entity.position.x,entity.position.y,entity.explode_on_death[1]))
 		end
 	end
 end

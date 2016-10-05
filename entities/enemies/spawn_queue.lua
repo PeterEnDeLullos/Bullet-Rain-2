@@ -1,6 +1,6 @@
 
 local id = 0
-function get_spawn_queue(_,x,y,queue,is_absolute, dt)
+return function(_,x,y,queue,is_absolute, dt)
  	local entity = {}
  	id =  id + 1
  	entity.name="queue".. id

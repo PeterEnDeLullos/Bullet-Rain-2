@@ -4,7 +4,6 @@ global = {}
 global.g = 2
 require 'core.main'
 core.states = require 'states.main'
-
 models = {}
 require"lib.Tserial"
 
