@@ -38,9 +38,11 @@ function core.entity.remove(entity)
 		end
 	end
 end
+
+-- Spawns an entity, and also spawns it's subcomponents, which an object CAN return as a return value.
 function core.entity.spawn(w, zone_id,absolute)
 	local da = 0
-	print(w[1])
+	
 					local ent, subs = w[1](unpack(w))
 
 					ent.remove_zone = zone_id
